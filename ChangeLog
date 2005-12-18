@@ -1,0 +1,20 @@
+/*
+                                changes.log
+
+*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*
+*       Part of:        EyE
+*
+*       Author:         E. BERTIN (IAP)
+*
+*       Contents:       log of changes made to the EyE source
+*
+*       Last modify:    21/08/2003
+*
+*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+Who     When            Where(mostly)   What
+
+EB      21/08/2003      -               Completely new distribution. Some
+                                        functions rewritten.
