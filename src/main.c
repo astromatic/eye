@@ -43,7 +43,7 @@ int	main(int argc, char *argv[])
   {
    static char	prefsname[MAXCHAR];
    char		**argkey, **argval;
-   int		a,abi,aei,nai, abo,aeo,nao, narg, opt;
+   int		a,abi,aei,nai, abo,aeo,nao, narg, opt, opt2;
 
 #ifdef HAVE_MPI
   MPI_Init (&argc,&argv);
@@ -70,10 +70,14 @@ int	main(int argc, char *argv[])
     if (*(argv[a]) == '-')
       {
       opt = (int)argv[a][1];
-      if (strlen(argv[a])<3 || opt == '-')
+      if (strlen(argv[a])<4 || opt == '-')
         {
+	opt2 = (int)tolower((int)argv[a][2]);
         if (opt == '-')
-          opt = (int)tolower((int)argv[a][2]);
+	  {
+	  opt = opt2;
+          opt2 = (int)tolower((int)argv[a][3]);
+	  }
         switch(opt)
           {
           case 'c':
@@ -81,7 +85,7 @@ int	main(int argc, char *argv[])
               strcpy(prefsname, argv[++a]);
             break;
           case 'd':
-            dumpprefs();
+            dumpprefs(opt2=='d' ? 1 :0);
             exit(EXIT_SUCCESS);
             break;
           case 'i':

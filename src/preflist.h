@@ -115,6 +115,8 @@ char *default_prefs[] =
 " ",
 "#------------------------------ Miscellaneous ---------------------------------",
 " ",
+"FRAME_LIMITS          1,1,1024,1024    # xmin, ymin, xmax, ymax of rectangular",
+"                                       # area to use",
 "VERBOSE_TYPE		NORMAL		# \"QUIET\",\"NORMAL\" or \"FULL\"",
 "*NNODES		1		# Number of nodes (for clusters)",
 "*NODE_INDEX		0		# Node index (for clusters)",

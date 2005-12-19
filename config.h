@@ -2,7 +2,7 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Archive creation date */
-#define DATE "2005-12-18"
+#define DATE "2005-12-19"
 
 /* Define to 1 if you have the `atexit' function. */
 #define HAVE_ATEXIT 1

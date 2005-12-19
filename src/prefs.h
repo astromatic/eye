@@ -74,7 +74,7 @@ prefstruct	prefs;
 /*-------------------------------- protos -----------------------------------*/
 extern int	cistrcmp(char *cs, char *ct, int mode);
 
-extern void	dumpprefs(void),
+extern void	dumpprefs(int state),
 		readprefs(char *filename,char **argkey,char **argval,int narg),
 		useprefs(void);
 

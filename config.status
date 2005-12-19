@@ -505,7 +505,7 @@ s,@INSTALL_STRIP_PROGRAM@,${SHELL} $(install_sh) -c -s,;t t
 s,@AWK@,gawk,;t t
 s,@SET_MAKE@,,;t t
 s,@PACKAGER@,Emmanuel Bertin,;t t
-s,@DATE2@,Sun Dec 18 2005,;t t
+s,@DATE2@,Mon Dec 19 2005,;t t
 s,@DATE3@,December 2005,;t t
 s,@CC@,cc,;t t
 s,@CFLAGS@, -O3 -funroll-loops -fomit-frame-pointer -Wall,;t t
@@ -821,7 +821,7 @@ ${ac_dA}PACKAGE_STRING${ac_dB}PACKAGE_STRING${ac_dC}"eye 1.2b1"${ac_dD}
 ${ac_dA}PACKAGE_BUGREPORT${ac_dB}PACKAGE_BUGREPORT${ac_dC}"bertin@iap.fr"${ac_dD}
 ${ac_dA}PACKAGE${ac_dB}PACKAGE${ac_dC}"eye"${ac_dD}
 ${ac_dA}VERSION${ac_dB}VERSION${ac_dC}"1.2b1"${ac_dD}
-${ac_dA}DATE${ac_dB}DATE${ac_dC}"2005-12-18"${ac_dD}
+${ac_dA}DATE${ac_dB}DATE${ac_dC}"2005-12-19"${ac_dD}
 ${ac_dA}HAVE_LIBM${ac_dB}HAVE_LIBM${ac_dC}1${ac_dD}
 ${ac_dA}STDC_HEADERS${ac_dB}STDC_HEADERS${ac_dC}1${ac_dD}
 ${ac_dA}HAVE_SYS_TYPES_H${ac_dB}HAVE_SYS_TYPES_H${ac_dC}1${ac_dD}
@@ -884,7 +884,7 @@ ${ac_uA}PACKAGE_STRING${ac_uB}PACKAGE_STRING${ac_uC}"eye 1.2b1"${ac_uD}
 ${ac_uA}PACKAGE_BUGREPORT${ac_uB}PACKAGE_BUGREPORT${ac_uC}"bertin@iap.fr"${ac_uD}
 ${ac_uA}PACKAGE${ac_uB}PACKAGE${ac_uC}"eye"${ac_uD}
 ${ac_uA}VERSION${ac_uB}VERSION${ac_uC}"1.2b1"${ac_uD}
-${ac_uA}DATE${ac_uB}DATE${ac_uC}"2005-12-18"${ac_uD}
+${ac_uA}DATE${ac_uB}DATE${ac_uC}"2005-12-19"${ac_uD}
 ${ac_uA}HAVE_LIBM${ac_uB}HAVE_LIBM${ac_uC}1${ac_uD}
 ${ac_uA}STDC_HEADERS${ac_uB}STDC_HEADERS${ac_uC}1${ac_uD}
 ${ac_uA}HAVE_SYS_TYPES_H${ac_uB}HAVE_SYS_TYPES_H${ac_uC}1${ac_uD}
