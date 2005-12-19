@@ -48,7 +48,7 @@ pkeystruct key[] =
   {"CHECKIMAGE_NAME", P_STRING, prefs.check_name},
   {"CHECKIMAGE_TYPE", P_KEY, &prefs.check_type, 0,0, 0.0,0.0,
    {"NONE", "FILTERED", "RESIDUALS", "HISTOGRAM"}},
-  {"FRAME_LIMITS", P_INTLIST, prefs.lim, 1, 2000000000, 0.0,0.0, {""},
+  {"FRAME_LIMITS", P_INTLIST, prefs.lim, -1, 2000000000, 0.0,0.0, {""},
      1,4, &prefs.nlim},
   {"LEARNING_TYPE", P_KEY, &prefs.learn_type, 0,0, 0.0,0.0,
    {"NONE","NEW", "RESUME", "RESTART"}},

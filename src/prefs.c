@@ -396,8 +396,9 @@ void	useprefs(void)
     prefs.retina_size[1] = prefs.retina_size[0];
 
 /* Limits not set are defaulted to -1 */
-  for (i=prefs.nlim; i<4; i++)
-    prefs.lim[i] = -1;
+  if (prefs.nlim<4)
+    for (i=prefs.nlim; i<4; i++)
+      prefs.lim[i] = -1;
 
 /* Get the input layer count of neurones from the retina size */
   prefs.nn_size[0] = prefs.retina_size[0]*prefs.retina_size[1];
