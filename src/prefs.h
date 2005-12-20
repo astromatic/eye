@@ -9,7 +9,7 @@
 *
 *	Contents:	Include for prefs.c
 *
-*	Last modify:	22/08/2003
+*	Last modify:	20/12/2005
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -24,6 +24,7 @@
 /*------------------------------- preferences -------------------------------*/
 typedef struct
   {
+  int		npair;					/* Nb of input pairs */
   char		prefs_name[MAXCHAR];			/* prefs filename*/
   char		retina_name[MAXCHAR];			/* retina filename*/
   int		retina_size[2];				/* retina size */
@@ -47,7 +48,7 @@ typedef struct
   int		nback_size;				/* nb of params */
   int		back_fsize[2];				/* bkgnd filt. size */
   int		nback_fsize;				/* nb of params */
-  double	back_default[2];			/* Default background*/
+  double	back_default[MAXINFIELD];		/* Default background*/
   int		nback_default;				/* nb of params */
   double        back_fthresh;				/* Filter threshold */
   int		lim[4];					/* frame limits */

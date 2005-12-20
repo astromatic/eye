@@ -9,7 +9,7 @@
 *
 *	Contents:	Functions to handle the configuration file.
 *
-*	Last modify:	22/08/2003
+*	Last modify:	20/12/2005
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -178,7 +178,7 @@ void    readprefs(char *filename, char **argkey, char **argval, int narg)
           case P_INT:
             if (!value || value[0]==(char)'#')
               error(EXIT_FAILURE, keyword," keyword has no value!");
-            ival = atoi(value);
+            ival = (int)strtol(value, (char **)NULL, 0);
             if (ival>=key[nkey].imin && ival<=key[nkey].imax)
               *(int *)(key[nkey].ptr) = ival;
             else
@@ -418,6 +418,13 @@ void	useprefs(void)
     prefs.back_size[1] = prefs.back_size[0];
   if (prefs.nback_fsize<2)
     prefs.back_fsize[1] = prefs.back_fsize[0];
+  if (prefs.nback_type<prefs.npair)
+  for (i=prefs.nback_type; i<prefs.npair; i++)
+      prefs.back_type[i] = prefs.back_type[prefs.nback_type-1];
+  prefs.nback_type = prefs.npair;
+  for (i=prefs.nback_default; i<prefs.npair; i++)
+      prefs.back_default[i] = prefs.back_default[prefs.nback_default-1];
+  prefs.nback_default = prefs.npair;
 
 
   return;

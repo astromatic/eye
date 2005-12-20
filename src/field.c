@@ -9,7 +9,7 @@
 *
 *	Contents:	Handling of field structures.
 *
-*	Last modify:	22/08/2003
+*	Last modify:	20/12/2005
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -37,7 +37,7 @@ INPUT	File name,
 OUTPUT	The new field pointer if OK, NULL otherwise.
 NOTES	-.
 AUTHOR	E. Bertin (IAP)
-VERSION	22/08/2003
+VERSION	20/12/2005
  ***/
 fieldstruct	*load_field(char *filename, int frameno, int fieldno)
 
@@ -89,11 +89,11 @@ fieldstruct	*load_field(char *filename, int frameno, int fieldno)
     field->height *= tab->naxisn[i];
 
 /*-- Background */
-  field->backw = prefs.back_size[fieldno]<field->width ?
-					prefs.back_size[fieldno]
+  field->backw = prefs.back_size[0]<field->width ?
+					prefs.back_size[0]
 					: field->width;
-  field->backh = prefs.back_size[fieldno]<field->height ?
-					prefs.back_size[fieldno]
+  field->backh = prefs.back_size[1]<field->height ?
+					prefs.back_size[1]
 					: field->height;
   field->nbackp = field->backw * field->backh;
   if ((field->nbackx = (field->width-1)/field->backw + 1) < 1)
@@ -101,8 +101,8 @@ fieldstruct	*load_field(char *filename, int frameno, int fieldno)
   if ((field->nbacky = (field->height-1)/field->backh + 1) < 1)
     field->nbacky = 1;
   field->nback = field->nbackx * field->nbacky;
-  field->nbackfx = field->nbackx>1 ? prefs.back_fsize[fieldno] : 1;
-  field->nbackfy = field->nbacky>1 ? prefs.back_fsize[fieldno] : 1;
+  field->nbackfx = field->nbackx>1 ? prefs.back_fsize[0] : 1;
+  field->nbackfy = field->nbacky>1 ? prefs.back_fsize[1] : 1;
 /* Set the back_type flag if absolute background is selected */
   field->back_type = prefs.back_type[fieldno];
   field->backdefault = prefs.back_default[fieldno];

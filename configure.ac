@@ -1,5 +1,5 @@
 # configure.ac for EyE
-# (C) E.Bertin 2003
+# (C) E.Bertin 2003-2005
 # Process this file with autoconf to produce a configure script.
 # First, disable the annoying config.cache
 define([AC_CACHE_LOAD],)
@@ -246,5 +246,5 @@ fi
 AC_MSG_RESULT([I will compile using:  $CC $CFLAGS])
 AC_MSG_RESULT([I will link using:     $CC $LDFLAGS $LIBS])
 
-AC_CONFIG_FILES([Makefile man/Makefile src/Makefile src/fits/Makefile] ${PACKAGE_NAME}.spec ${PACKAGE_NAME}-tpx.spec man/${PACKAGE_NAME}.1)
+AC_CONFIG_FILES([Makefile man/Makefile src/Makefile src/fits/Makefile] eye.spec eye-tpx.spec man/eye.1)
 AC_OUTPUT

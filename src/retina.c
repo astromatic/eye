@@ -271,8 +271,7 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
         for (i=nfield; i--; fieldt++)
           {
           pix = *((*(scant++))++)/sig;
-          index += *(stept++)
-		*(int)(BINS_PER_SIGMA*PIX_TO_RETINA(pix)+binoff);
+          index += *(stept++) * (int)(BINS_PER_SIGMA*PIX_TO_RETINA(pix)+binoff);
           }
         if (x>=xmin && x<xmax && index>=0 && index<nbin)
           bin[index]++;

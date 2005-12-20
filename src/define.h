@@ -9,7 +9,7 @@
 *
 *	Contents:	global definitions.
 *
-*	Last modify:	21/08/2003
+*	Last modify:	20/12/2005
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -43,8 +43,8 @@
 /*----------------------------- Internal constants --------------------------*/
 
 #define		BIG		1e+30		/* a huge number */
-#define		OUTPUT		stderr		/* where all msgs are sent */
-#define		MAXCHAR		4000		/* max. number of characters */
+#define		OUTPUT		stdout		/* where all msgs are sent */
+#define		MAXCHAR		4096		/* max. number of characters */
 
 /*--------------------- in case of missing constants ------------------------*/
 

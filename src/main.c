@@ -9,7 +9,7 @@
 *
 *	Contents:	parsing of the command line.
 *
-*	Last modify:	19/08/2003
+*	Last modify:	20/12/2005
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -34,14 +34,13 @@
 #define		SYNTAX \
 "eye -i Input_image(s) -o Output_image(s) [-<keyword> <value>]\n" \
 " [-c <configuration_file>]\n" \
-" or, to dump a default configuration file:\n" \
-"eye -d \n"
+"> to dump a default configuration file: eye -d \n" \
+"> to dump a default extended configuration file: eye -dd \n"
 
 /********************************** main ************************************/
 
 int	main(int argc, char *argv[])
   {
-   static char	prefsname[MAXCHAR];
    char		**argkey, **argval;
    int		a,abi,aei,nai, abo,aeo,nao, narg, opt, opt2;
 
@@ -63,7 +62,7 @@ int	main(int argc, char *argv[])
 /* default parameters */
   abi=aei=abo=aeo=nai=nao=0;
   narg = 0;
-  strcpy(prefs.prefs_name, "default.eye");
+  strcpy(prefs.prefs_name, "eye.conf");
 
   for (a=1; a<argc; a++)
     {
@@ -82,7 +81,7 @@ int	main(int argc, char *argv[])
           {
           case 'c':
             if (a<(argc-1))
-              strcpy(prefsname, argv[++a]);
+              strcpy(prefs.prefs_name, argv[++a]);
             break;
           case 'd':
             dumpprefs(opt2=='d' ? 1 :0);
@@ -100,7 +99,7 @@ int	main(int argc, char *argv[])
             break;
           case 'v':
             printf("%s version %s (%s)\n", BANNER,MYVERSION,DATE);
-            exit(0);
+            exit(EXIT_SUCCESS);
             break;
           case 'h':
           default:
@@ -117,14 +116,15 @@ int	main(int argc, char *argv[])
       error(EXIT_SUCCESS,"SYNTAX: ", SYNTAX);
     }
 
-  readprefs(prefsname, argkey, argval, narg);
+  if (nao!=nai)
+    error(EXIT_FAILURE,
+	"*Error*: the number of input and output images is different!", "");
+  prefs.npair = nai;
+  readprefs(prefs.prefs_name, argkey, argval, narg);
   useprefs();
   free(argkey);
   free(argval);
 
-  if (nao!=nai)
-    error(EXIT_FAILURE,
-	"*Error*: the number of input and output images is different!", "");
 
 #ifdef HAVE_MPI
   MPI_Comm_size(MPI_COMM_WORLD,&prefs.nnodes);
