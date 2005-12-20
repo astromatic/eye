@@ -94,11 +94,11 @@ void	makeit(char **inputnames, char **outputnames, int nb)
           error(EXIT_FAILURE, "*Error*: image size different from input in ",
 	    outputnames[i]);
         if (cati->ntab>1)
-          sprintf(str1, "[%d/%d]", j+1 , cati->ntab-1);
+          sprintf(str1, "[%d/%d]", j , cati->ntab-1);
         else
           *str1 = '\0';
         if (cato->ntab>1)
-          sprintf(str2, "[%d/%d]", k+1 , cato->ntab-1);
+          sprintf(str2, "[%d/%d]", k , cato->ntab-1);
         else
           *str2 = '\0';
         fprintf(OUTPUT, "Input-pair #%4d: %.30s%s & %.30s%s",

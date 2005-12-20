@@ -44,7 +44,7 @@
 
 #define		BIG		1e+30		/* a huge number */
 #define		OUTPUT		stderr		/* where all msgs are sent */
-#define		MAXCHAR		512		/* max. number of characters */
+#define		MAXCHAR		4000		/* max. number of characters */
 
 /*--------------------- in case of missing constants ------------------------*/
 
