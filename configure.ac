@@ -7,7 +7,7 @@ define([AC_CACHE_SAVE],)
 
 # This is your standard Bertin source code...
 AC_PREREQ(2.53)
-AC_INIT(eye, 1.2b1, [bertin@iap.fr])
+AC_INIT(eye, 1.2b, [bertin@iap.fr])
 AC_CONFIG_SRCDIR(src/makeit.c)
 AC_CONFIG_AUX_DIR(autoconf)
 AM_CONFIG_HEADER([config.h])

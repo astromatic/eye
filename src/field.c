@@ -30,7 +30,7 @@
 #include	"prefs.h"
 
 /****** load_field ************************************************************
-PROTO	fieldstruct *load_field(char *filename, int frameno)
+PROTO	fieldstruct *load_field(char *filename, int frameno, int fieldno)
 PURPOSE	Initialize a field structure (in read mode)
 INPUT	File name,
 	FITS extension number in file (0=primary).
@@ -42,6 +42,7 @@ VERSION	20/12/2005
 fieldstruct	*load_field(char *filename, int frameno, int fieldno)
 
   {
+   char		str[512];
    fieldstruct	*field;
    tabstruct	*tab;
    int		i;
@@ -56,6 +57,9 @@ fieldstruct	*load_field(char *filename, int frameno, int fieldno)
     field->rfilename = field->filename;
   else
     field->rfilename++;
+
+  sprintf(str,"Examining Image %s", field->rfilename);
+  NFPRINTF(OUTPUT, str);
 
 /* Check the image exists and read important info (image size, etc...) */
   field->cat = read_cat(filename);
@@ -106,6 +110,7 @@ fieldstruct	*load_field(char *filename, int frameno, int fieldno)
 /* Set the back_type flag if absolute background is selected */
   field->back_type = prefs.back_type[fieldno];
   field->backdefault = prefs.back_default[fieldno];
+  printinfo_field(field);
 
 /* Now make the background map */
   make_back(field);
@@ -125,6 +130,33 @@ fieldstruct	*load_field(char *filename, int frameno, int fieldno)
   return field;
   }
 
+
+/****** printinfo_field ******************************************************
+PROTO	void printinfo_field(fieldstruct *field)
+PURPOSE	Print info about a field
+INPUT	Pointer to the field.
+OUTPUT	-.
+NOTES	-.
+AUTHOR	E. Bertin (IAP)
+VERSION	16/08/2003
+ ***/
+void	printinfo_field(fieldstruct *field)
+
+  {  
+/* Information about the file */
+  if (field->frameno)
+      sprintf(gstr, "[%d]", field->frameno);
+    else
+      *gstr ='\0';
+  QPRINTF(OUTPUT, "%s%s \"%.20s\"  %dx%d  %d bits (%s)\n",
+        field->rfilename, gstr, *field->ident? field->ident: "no ident",
+        field->width, field->height, field->tab->bytepix*8,
+        field->tab->bitpix>0?
+                (field->tab->compress_type!=COMPRESS_NONE ?
+                        "compressed":"integers") : "floats");
+
+  return;
+  }
 
 /****** end_field ************************************************************
 PROTO	void end_field(fieldstruct *field)

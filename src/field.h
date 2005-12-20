@@ -86,6 +86,7 @@ typedef struct field
 
 extern fieldstruct	*load_field(char *filename, int frameno, int fieldno);
 
-extern void		end_field(fieldstruct *field);
+extern void		end_field(fieldstruct *field),
+			printinfo_field(fieldstruct *field);
 
 #endif

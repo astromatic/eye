@@ -133,8 +133,8 @@ int	main(int argc, char *argv[])
 
   makeit(argv+abi, argv+abo, nai);
 
-  NFPRINTF(OUTPUT, "All done");
-  NPRINTF(OUTPUT, "\n");
+  NFPRINTF(OUTPUT, "");
+  NPRINTF(OUTPUT, "> All done (in %d s)\n", prefs.time_diff);
 
 #ifdef HAVE_MPI
   MPI_Finalize();

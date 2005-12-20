@@ -62,6 +62,11 @@ typedef struct
 /*----- miscellaneous */
   int		node_index;		/* Node index (for multiprocessing) */ 
   enum	{QUIET, NORM, FULL}		verbose_type;	/* display type */
+  char		sdate_start[12];		/* EyE start date */
+  char		stime_start[12];		/* EyE start time */
+  char 		sdate_end[12];			/* EyE end date */
+  char		stime_end[12];			/* EyE end time */
+  int		time_diff;			/* Execution time */
 
 /*----- customize */
   }	prefstruct;
