@@ -89,7 +89,7 @@ char *default_prefs[] =
 "LEARNING_RATE          0.1, 50.0       # <learn rate> or",
 "                                       # <learn rate>,<max. learn rate>",
 "NN_SIZE                12,8,1          # Neurons per layer (max. 3 layers)",
-"NPASSES                100000000       # Number of pattern presentations",
+"NPASSES                100             # Nb of passes through the training set",
 "BUFFER_MAXSIZE         200000          # Max.number of different patterns used",
 " ",
 "#--------------------------- Background subtraction ---------------------------",

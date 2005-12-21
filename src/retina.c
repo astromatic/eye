@@ -287,6 +287,7 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
     if (*(bint++))
       noccup++;
   quota = (float)nsampmax/noccup;
+
 /* Init scan counters once more */
   sprintf(str, "Feeding the pattern stack (%d max. more, %5.1f%% free)",
 	nsampmax, 100.0 - 100.0*retina->bpann->nstack/retina->bpann->nstackmax);

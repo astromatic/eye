@@ -30,6 +30,7 @@
 #include	"define.h"
 #include	"globals.h"
 #include	"fits/fitscat.h"
+#include	"bpann.h"
 #include	"prefs.h"
 #include	"retina.h"
 
@@ -44,8 +45,8 @@ void	makeit(char **inputnames, char **outputnames, int nb)
    catstruct	*cati, *cato;
    tabstruct	*tabi, *tabo;
    time_t	thetime, thetime2;
+   char		str[256];
    struct tm	*tm;
-   char		str1[16], str2[16];
    int		i,j,k,n, nstack=0;
 
 /* Processing start date and time */
@@ -109,29 +110,19 @@ void	makeit(char **inputnames, char **outputnames, int nb)
           }
 
 /*------ Prepare image reading */
+        sprintf(str, "Input-pair #%d:\n", n+1);
+        NFPRINTF(OUTPUT, str);
         in = load_field(inputnames[i], j, i);
         out = load_field(outputnames[i], k, i);
         NPRINTF(OUTPUT, "\n");
         if (in->width!=out->width || in->height!=out->height)
           error(EXIT_FAILURE, "*Error*: image size different from input in ",
 	    outputnames[i]);
-        if (cati->ntab>1)
-          sprintf(str1, "[%d/%d]", j , cati->ntab-1);
-        else
-          *str1 = '\0';
-        if (cato->ntab>1)
-          sprintf(str2, "[%d/%d]", k , cato->ntab-1);
-        else
-          *str2 = '\0';
-        fprintf(OUTPUT, "Input-pair #%-4d: %.30s%s & %.30s%s\n",
-		n+1,
-		in->rfilename, str1,
-		out->rfilename, str2);
 /*------ Put it in the learning-list */
         fields[0] = in;
         fields[1] = out;
         nstack = feed_retina(retina, fields, 2,
-		(int)(2.0*prefs.nsamp_max/nb));
+		(int)((prefs.nsamp_max-nstack)/(double)(nb-n)));
         end_field(in);
         end_field(out);
         n++;
@@ -154,8 +145,10 @@ void	makeit(char **inputnames, char **outputnames, int nb)
 
   if (prefs.learn_type != LEARN_NONE)
     {
-    train_retina(retina, prefs.niter/nstack,
+    train_retina(retina, prefs.niter,
 	(float)prefs.learn_rate[0], (float)prefs.learn_rate[1]);
+    sprintf(str, "Final reduced error: %g\n", retina->bpann->err);
+    NFPRINTF(OUTPUT, str);
     NFPRINTF(OUTPUT, "Saving retina...");
     save_retina(retina, prefs.retina_name);
     }

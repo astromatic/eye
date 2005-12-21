@@ -14,7 +14,7 @@
 *
 *	Requirements:	The LDACTools.
 *
-*	Last modify:	22/08/2003
+*	Last modify:	21/12/2005
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -218,7 +218,7 @@ void	looptrain_bpann(bpannstruct *bpann, int niter)
    int		i;
 
   bpann->nsweep = niter;
-  sprintf(str, "Learning started: %d patterns / %d sweeps.\n",
+  sprintf(str, "Learning started: %d patterns / %d iterations.\n",
 	bpann->nstack, bpann->nsweep);
   NFPRINTF(OUTPUT,str);
 
