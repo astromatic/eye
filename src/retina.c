@@ -9,7 +9,7 @@
 *
 *	Contents:	Handling of retinae.
 *
-*	Last modify:	22/08/2003
+*	Last modify:	21/12/2005
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -206,10 +206,12 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
    fieldstruct	**fieldt;
    catstruct	*cat;
    tabstruct	*tab;
+   char		str[80];
    PIXTYPE	**scan, **scant, 
 		pix;
    float	*input,
 		sig, binoff, quota, frac;
+
    int		*bin,*bint, *step,*stept, *fcurpos,*fcurpost,
 		index, nbin;
    int		i,x,y, w,h, histow, noccup, xmin,xmax,ymin,ymax;
@@ -285,9 +287,10 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
     if (*(bint++))
       noccup++;
   quota = (float)nsampmax/noccup;
-
 /* Init scan counters once more */
-  NFPRINTF(OUTPUT, "Feeding the pattern stack ...");
+  sprintf(str, "Feeding the pattern stack (%d max for this pair,%5.1f%% free)",
+	nsampmax, 100.0 - 100.0*retina->bpann->nstack/retina->bpann->nstackmax);
+  NFPRINTF(OUTPUT, str);
   fieldt = field;
   fcurpost = fcurpos;
   for (i=nfield; i--; fieldt++)

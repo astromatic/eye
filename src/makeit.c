@@ -9,7 +9,7 @@
 *
 *	Contents:	Main loop.
 *
-*	Last modify:	20/12/2005
+*	Last modify:	21/12/2005
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -123,14 +123,15 @@ void	makeit(char **inputnames, char **outputnames, int nb)
           sprintf(str2, "[%d/%d]", k , cato->ntab-1);
         else
           *str2 = '\0';
-        fprintf(OUTPUT, "Input-pair #%4d: %.30s%s & %.30s%s",
+        fprintf(OUTPUT, "Input-pair #%4d: %.30s%s & %.30s%s\n",
 		n+1,
 		in->rfilename, str1,
 		out->rfilename, str2);
 /*------ Put it in the learning-list */
         fields[0] = in;
         fields[1] = out;
-        nstack = feed_retina(retina, fields, 2, prefs.nsamp_max);
+        nstack = feed_retina(retina, fields, 2,
+		(int)(prefs.nsamp_max/(double)nb));
         end_field(in);
         end_field(out);
         n++;
