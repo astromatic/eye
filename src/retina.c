@@ -210,20 +210,19 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
 		pix;
    float	*input,
 		sig, binoff, quota, frac;
-   size_t	*bin,*bint, *step,*stept, *fcurpos,*fcurpost,
+   int		*bin,*bint, *step,*stept, *fcurpos,*fcurpost,
 		index, nbin;
    int		i,x,y, w,h, histow, noccup, xmin,xmax,ymin,ymax;
 
   w = (*field)->width;
   h = (*field)->height;
   sig = (*field)->backsig;
-
   NFPRINTF(OUTPUT, "Histogramming...");
 /* Init scan counters */
   histow = 2*DYNAMIC_RANGE*BINS_PER_SIGMA;	/* twice: pos + neg. values */
   binoff = ((histow-1)/2)+0.5;
-  QMALLOC(step, size_t, nfield);
-  QMALLOC(fcurpos, size_t, nfield);
+  QMALLOC(step, int, nfield);
+  QMALLOC(fcurpos, int, nfield);
   nbin = 1;
   stept = step;
   fieldt = field;
@@ -240,7 +239,7 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
     }
 
 /* Allocate memory space for the multi-dimensional histogram */
-  QCALLOC(bin, size_t, nbin);
+  QCALLOC(bin, int, nbin);
   QMALLOC(scan, PIXTYPE *, nfield);
 
 
@@ -270,7 +269,8 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
         fieldt = field;
         for (i=nfield; i--; fieldt++)
           {
-          pix = *((*(scant++))++)/sig;
+          pix = *((*scant)++)/sig;
+          scant++;
           index += *(stept++) * (int)(BINS_PER_SIGMA*PIX_TO_RETINA(pix)+binoff);
           }
         if (x>=xmin && x<xmax && index>=0 && index<nbin)
@@ -319,10 +319,9 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
       fieldt = field;
       for (i=nfield; i--; fieldt++)
         {
-        pix = *((*(scant++))++)/sig;
-        pix = PIX_TO_RETINA(pix);
-        index += *(stept++)
-		*(int)(BINS_PER_SIGMA*pix+binoff);
+        pix = *((*scant)++)/sig;
+        scant++;
+        index += *(stept++)*(int)(BINS_PER_SIGMA*PIX_TO_RETINA(pix)+binoff);
         }
       if (y>=ymin && y<ymax && x>=xmin && x<xmax && index>=0 && index<nbin)
         {
