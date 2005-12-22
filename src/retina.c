@@ -9,7 +9,7 @@
 *
 *	Contents:	Handling of retinae.
 *
-*	Last modify:	21/12/2005
+*	Last modify:	22/12/2005
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -273,7 +273,7 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
           {
           pix = *((*scant)++)/sig;
           scant++;
-          index += *(stept++) * (int)(BINS_PER_SIGMA*PIX_TO_RETINA(pix)+binoff);
+          index += *(stept++) * (int)(BINS_PER_SIGMA*pix)+binoff);
           }
         if (x>=xmin && x<xmax && index>=0 && index<nbin)
           bin[index]++;
@@ -325,7 +325,8 @@ int	feed_retina(retinastruct *retina, fieldstruct **field, int nfield,
         {
         pix = *((*scant)++)/sig;
         scant++;
-        index += *(stept++)*(int)(BINS_PER_SIGMA*PIX_TO_RETINA(pix)+binoff);
+        pix = PIX_TO_RETINA(pix);
+        index += *(stept++)*(int)(BINS_PER_SIGMA*pix+binoff);
         }
       if (y>=ymin && y<ymax && x>=xmin && x<xmax && index>=0 && index<nbin)
         {
