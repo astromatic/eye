@@ -1,8 +1,8 @@
-fitscleanup.o: fitscleanup.c ../../config.h /usr/include/signal.h \
-  /usr/include/gentoo-multilib/amd64/signal.h /usr/include/features.h \
-  /usr/include/gentoo-multilib/amd64/features.h /usr/include/sys/cdefs.h \
-  /usr/include/gentoo-multilib/amd64/sys/cdefs.h /usr/include/gnu/stubs.h \
-  /usr/include/gentoo-multilib/amd64/gnu/stubs.h \
+fitscleanup.o fitscleanup.o: fitscleanup.c ../../config.h \
+  /usr/include/signal.h /usr/include/gentoo-multilib/amd64/signal.h \
+  /usr/include/features.h /usr/include/gentoo-multilib/amd64/features.h \
+  /usr/include/sys/cdefs.h /usr/include/gentoo-multilib/amd64/sys/cdefs.h \
+  /usr/include/gnu/stubs.h /usr/include/gentoo-multilib/amd64/gnu/stubs.h \
   /usr/include/bits/sigset.h \
   /usr/include/gentoo-multilib/amd64/bits/sigset.h \
   /usr/include/bits/types.h \

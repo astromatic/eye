@@ -1,4 +1,4 @@
-fitscheck.o: fitscheck.c ../../config.h /usr/include/stdio.h \
+fitscheck.o fitscheck.o: fitscheck.c ../../config.h /usr/include/stdio.h \
   /usr/include/gentoo-multilib/amd64/stdio.h /usr/include/features.h \
   /usr/include/gentoo-multilib/amd64/features.h /usr/include/sys/cdefs.h \
   /usr/include/gentoo-multilib/amd64/sys/cdefs.h /usr/include/gnu/stubs.h \

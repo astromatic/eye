@@ -1,4 +1,4 @@
-fitsmisc.o: fitsmisc.c ../../config.h /usr/include/ctype.h \
+fitsmisc.o fitsmisc.o: fitsmisc.c ../../config.h /usr/include/ctype.h \
   /usr/include/gentoo-multilib/amd64/ctype.h /usr/include/features.h \
   /usr/include/gentoo-multilib/amd64/features.h /usr/include/sys/cdefs.h \
   /usr/include/gentoo-multilib/amd64/sys/cdefs.h /usr/include/gnu/stubs.h \
