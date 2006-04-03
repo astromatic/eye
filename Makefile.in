@@ -37,15 +37,13 @@ build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(srcdir)/eye-tpx.spec.in $(srcdir)/eye.spec.in \
-	$(top_srcdir)/configure AUTHORS COPYING ChangeLog INSTALL \
-	THANKS autoconf/config.guess autoconf/config.sub \
-	autoconf/depcomp autoconf/install-sh autoconf/missing \
-	autoconf/mkinstalldirs
+	$(srcdir)/eye.spec.in $(top_srcdir)/configure AUTHORS COPYING \
+	ChangeLog INSTALL THANKS autoconf/config.guess \
+	autoconf/config.sub autoconf/depcomp autoconf/install-sh \
+	autoconf/missing autoconf/mkinstalldirs
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/acx_mpi.m4 \
-	$(top_srcdir)/acx_pthread.m4 \
+am__aclocal_m4_deps = $(top_srcdir)/acx_pthread.m4 \
 	$(top_srcdir)/acx_prog_cc_optim.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -53,7 +51,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno configure.status.lineno
 mkinstalldirs = $(SHELL) $(top_srcdir)/autoconf/mkinstalldirs
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = eye.spec eye-tpx.spec
+CONFIG_CLEAN_FILES = eye.spec
 depcomp =
 am__depfiles_maybe =
 SOURCES =
@@ -110,8 +108,6 @@ LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MPICC = @MPICC@
-MPILIBS = @MPILIBS@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGER = @PACKAGER@
@@ -169,19 +165,14 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 
 # Main Makefile for EyE
-# Copyright (C) 2003 Emmanuel Bertin.
+# Copyright (C) 2003-2006 Emmanuel Bertin.
 AUTOMAKE_OPTIONS = foreign no-dependencies
 SUBDIRS = man src
-EXTRA_DIST = doc AUTHORS BUGS ChangeLog HISTORY INSTALL README \
-			  THANKS acx_pthread.m4 acx_prog_cc_optim.m4 \
-			  acx_mpi.m4 \
-			  $(PACKAGE).spec.in \
-			  $(PACKAGE)-tpx.spec.in man/$(PACKAGE).1.in
+EXTRA_DIST = AUTHORS BUGS ChangeLog HISTORY INSTALL README \
+			  THANKS acx_pthread.m4 acx_prog_cc_optim.m4
 
 RPM_ROOTDIR = /usr/src/RPM
 RPM_SRCDIR = $(RPM_ROOTDIR)/SOURCES
-RPM_ARCH = i586
-RPM_RPMDIR = $(RPM_ROOTDIR)/RPMS/$(RPM_ARCH)
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -237,8 +228,6 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 distclean-hdr:
 	-rm -f config.h stamp-h1
 eye.spec: $(top_builddir)/config.status $(srcdir)/eye.spec.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-eye-tpx.spec: $(top_builddir)/config.status $(srcdir)/eye-tpx.spec.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 uninstall-info-am:
 
@@ -611,13 +600,18 @@ uninstall-info: uninstall-info-recursive
 	pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
 	uninstall-info-am
 
+			  $(PACKAGE).spec.in man/$(PACKAGE).1.in
 rpm:	dist
 	cp -f $(PACKAGE)-$(VERSION).tar.gz $(RPM_SRCDIR)
-	rpmbuild -bb --clean $(PACKAGE).spec
+	rpmbuild -ba --clean $(PACKAGE).spec
 
-rpm-tpx:	dist
-	cp -f $(PACKAGE)-$(VERSION).tar.gz $(RPM_SRCDIR)
-	rpmbuild -bb --clean $(PACKAGE).spec $(PACKAGE)-tpx.spec
+rpm-opteron:	dist
+	cp -f $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(RPM_SRCDIR)
+	GCCFLAGS="-O3 -g -funroll-loops -fomit-frame-pointer -Wall -march=opteron" rpmbuild -ba --target=x86_64 --clean $(PACKAGE_NAME).spec                                                            
+
+rpm-athlon:	dist
+	cp -f $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(RPM_SRCDIR)
+	GCCFLAGS="-O3 -g -funroll-loops -fomit-frame-pointer -Wall -m32 -march=i686 -msse -mfpmath=sse -mtune=athlon" rpmbuild -ba --target=i686 --clean $(PACKAGE_NAME).spec
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -22,13 +22,13 @@ The general SYNTAX is the following:
 - Keyword parameters given in the command line override those from the
   configuration file.
 - If the list-file is given as unique argument, EyE looks for a
-  default configuration file called ``default.eye''. If no configuration
+  default configuration file called ``eye.conf''. If no configuration
   file is available, EyE uses internal defaults.
 
 % eye -d
 
 prints a default configuration file on the standard output
 
-Please report any bug or strange behaviour to bertin@iap.fr.
+Please report any bug or strange behaviour to bertin@iap.fr or marmo@iap.fr.
 
 						Emmanuel Bertin <bertin@iap.fr>

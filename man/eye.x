@@ -1,3 +1,3 @@
 [name]
-eye \- generate a non-linear SExtractor filter (``retina'')
+eye \- generate a non-linear SExtractor filter ("retina")
 

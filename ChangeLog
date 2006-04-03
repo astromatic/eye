@@ -1,5 +1,5 @@
 /*
-                                changes.log
+                                Changelog
 
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 *
@@ -9,12 +9,107 @@
 *
 *       Contents:       log of changes made to the EyE source
 *
-*       Last modify:    21/08/2003
+*       Last modify:    03/04/2006
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 
-Who     When            Where(mostly)   What
+------------------------------------------------------------------------
+r92 | marmo | 2005-12-22 14:11:50 +0100 (Thu, 22 Dec 2005) | 5 lines
+
+
+retina.c: In function `feed_retina':
+retina.c:276: error: syntax error before ')' token
+fixed
+
+------------------------------------------------------------------------
+r91 | bertin | 2005-12-22 13:55:17 +0100 (Thu, 22 Dec 2005) | 3 lines
+
+Reintroduced forgotten PIX_TO_RETINA(). :-(
+One extra commit to bother Laurent.
+
+------------------------------------------------------------------------
+r90 | bertin | 2005-12-21 20:18:11 +0100 (Wed, 21 Dec 2005) | 3 lines
+
+Improved general presentation.
+NPASSES is now the number of passes through the whole training set (100 is now the default).
+
+------------------------------------------------------------------------
+r89 | bertin | 2005-12-21 18:30:46 +0100 (Wed, 21 Dec 2005) | 2 lines
+
+Recovered the missing half of the pattern stack.
+
+------------------------------------------------------------------------
+r88 | bertin | 2005-12-21 18:16:40 +0100 (Wed, 21 Dec 2005) | 3 lines
+
+New balancing scheme for training samples.
+Minor Aesthetical improvements.
+
+------------------------------------------------------------------------
+r87 | bertin | 2005-12-21 17:41:07 +0100 (Wed, 21 Dec 2005) | 3 lines
+
+Fixed bug in Bayesian histogram on 64bit systems.
+Fixed compiler-dependent bug in retina feeding routine.
+
+------------------------------------------------------------------------
+r86 | bertin | 2005-12-20 20:26:25 +0100 (Tue, 20 Dec 2005) | 3 lines
+
+Further aesthetical improvements.
+Changed version number to 1.2.
+
+------------------------------------------------------------------------
+r85 | bertin | 2005-12-20 20:21:29 +0100 (Tue, 20 Dec 2005) | 3 lines
+
+Improved Aesthetics of display and config.file.
+Changed PASSES keyword to NPASSES keyword
+
+------------------------------------------------------------------------
+r84 | bertin | 2005-12-20 19:09:57 +0100 (Tue, 20 Dec 2005) | 3 lines
+
+Removed more junk.
+Fixed huge bug in handling of background mesh-sizes.
+
+------------------------------------------------------------------------
+r83 | bertin | 2005-12-20 18:59:56 +0100 (Tue, 20 Dec 2005) | 2 lines
+
+removed even more junk.
+
+------------------------------------------------------------------------
+r82 | bertin | 2005-12-20 18:56:09 +0100 (Tue, 20 Dec 2005) | 2 lines
+
+removed more junk.
+
+------------------------------------------------------------------------
+r81 | bertin | 2005-12-20 18:53:07 +0100 (Tue, 20 Dec 2005) | 2 lines
+
+removed junk.
+
+------------------------------------------------------------------------
+r80 | bertin | 2005-12-20 18:51:09 +0100 (Tue, 20 Dec 2005) | 2 lines
+
+removed junk.
+
+------------------------------------------------------------------------
+r79 | bertin | 2005-12-20 18:44:57 +0100 (Tue, 20 Dec 2005) | 2 lines
+
+removed junk.
+
+------------------------------------------------------------------------
+r78 | marmo | 2005-12-20 14:37:26 +0100 (Tue, 20 Dec 2005) | 1 line
+
+displayed informations updated
+------------------------------------------------------------------------
+r77 | marmo | 2005-12-19 12:07:20 +0100 (Mon, 19 Dec 2005) | 1 line
+
+default value -1 in FRAME_LIMITS parameter activated
+------------------------------------------------------------------------
+r76 | marmo | 2005-12-19 11:37:36 +0100 (Mon, 19 Dec 2005) | 1 line
+
+FRAME_LIMITS parameter and -dd option added
+------------------------------------------------------------------------
+r75 | marmo | 2005-12-18 19:40:11 +0100 (Sun, 18 Dec 2005) | 2 lines
+
+reference version for eye
 
 EB      21/08/2003      -               Completely new distribution. Some
                                         functions rewritten.

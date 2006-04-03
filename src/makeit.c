@@ -23,10 +23,6 @@
 #include	<string.h>
 #include	<time.h>
 
-#ifdef HAVE_MPI
-#include	<mpi.h>
-#endif
-
 #include	"define.h"
 #include	"globals.h"
 #include	"fits/fitscat.h"

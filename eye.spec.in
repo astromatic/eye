@@ -2,7 +2,7 @@
 %define version @PACKAGE_VERSION@
 %define release 1
 
-Summary: resample and combine astronomical FITS images
+Summary: generate a non-linear SExtractor filter ("retina")
 Name: %{name}
 Version: %{version}
 Release: %{release}
@@ -14,16 +14,24 @@ BuildRoot: %{_tmppath}/%{name}-buildroot
 Prefix: %{_prefix}
 
 %description
-SWarp is a program that resamples and coadd FITS images to any arbitrary astrometric projection recognized by the WCS standard.
-
+In EyE, a neural network connected to pixels of a moving window (retina)
+from one or several input image(s) is trained to associate these "stimuli" to
+the corresponding response in one or several output (model) image(s).
+The resulting filter can then be loaded in SExtractor to operate complex,
+wildly non-linear filters on astronomical images. Typical applications of EyE
+include adaptive filtering, feature detection and cosmetic corrections.
 
 %prep
 %setup -q
 
 %build
-./configure --enable-icc --enable-static --prefix=$RPM_BUILD_ROOT/usr/local/ --mandir=$RPM_BUILD_ROOT/usr/local/man/
-
-make
+if test "$GCCFLAGS"; then
+./configure --enable-static --prefix=$RPM_BUILD_ROOT/usr/local/ --mandir=$RPM_BUILD_ROOT/usr/local/man/
+make -j CFLAGS="$GCCFLAGS"
+else
+./configure --enable-static --prefix=$RPM_BUILD_ROOT/usr/local/ --mandir=$RPM_BUILD_ROOT/usr/local/man/
+make -j
+fi
 
 %install
 make install
@@ -36,22 +44,10 @@ rm -rf $RPM_BUILD_ROOT
 /usr/local/bin/@PACKAGE_NAME@
 /usr/local/man/man1/@PACKAGE_NAME@.1
 /usr/local/man/manx/@PACKAGE_NAME@.x
-%doc AUTHORS ChangeLog COPYING HISTORY INSTALL README THANKS doc/swarp.ps
+%doc AUTHORS ChangeLog COPYING HISTORY INSTALL README THANKS
 
 %changelog
 * @DATE2@ @PACKAGER@ <@PACKAGE_BUGREPORT@>
 - Automatic RPM rebuild
-* Wed Jul 09 2003 Emmanuel Bertin <bertin@iap.fr>
-- RPM build for V2.0b6
-* Tue Apr 29 2003 Emmanuel Bertin <bertin@iap.fr>
-- RPM build for V1.42
-* Wed Mar 05 2003 Emmanuel Bertin <bertin@iap.fr>
-- RPM build for V1.40
-* Sat Jan 18 2003 Emmanuel Bertin <bertin@iap.fr>
-- RPM build for V1.39
-* Thu Nov 28 2002 Emmanuel Bertin <bertin@iap.fr>
-- RPM build for V1.38
-* Thu May 09 2002 Emmanuel Bertin <bertin@iap.fr>
-- First RPM build
 
 # end of file

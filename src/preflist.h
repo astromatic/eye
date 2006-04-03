@@ -5,11 +5,11 @@
 *
 *	Part of:	EyE
 *
-*	Author:		E.BERTIN (IAP)
+*	Author:		E.BERTIN (IAP), C.MARMO (IAP)
 *
 *	Contents:	Keywords for the configuration file.
 *
-*	Last modify:	20/12/2005
+*	Last modify:	03/04/2006
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -56,8 +56,6 @@ pkeystruct key[] =
      1,2, &prefs.nlearn_rate},
   {"NN_SIZE", P_INTLIST, &prefs.nn_size[1], 1, 1024, 0.0,0.0, {""},
      1,3, &prefs.nnn_size},
-  {"NNODES", P_INT, &prefs.nnodes, 1, 65535},
-  {"NODE_INDEX", P_INT, &prefs.node_index, -1, 65534},
   {"NPASSES", P_INT, &prefs.niter, 1,2000000000},
   {"NTHREADS", P_INT, &prefs.nthreads, 1, THREADS_PREFMAX},
   {"RETINA_NAME", P_STRING, prefs.retina_name},
@@ -96,9 +94,9 @@ char *default_prefs[] =
 " ",
 "SUBTRACT_BACK          Y               # Subtract sky background (Y/N)?",
 "                                       # (all or for each image)",
-"BACK_TYPE              AUTO            # \"AUTO\" or \"MANUAL\"",
+"*BACK_TYPE              AUTO            # \"AUTO\" or \"MANUAL\"",
 "                                       # (all or for each image)",
-"BACK_DEFAULT           0.0             # Default background value in MANUAL",
+"*BACK_DEFAULT           0.0             # Default background value in MANUAL",
 "                                       # (all or for each image)",
 "BACK_SIZE              128             # Background mesh size (pixels)",
 "                                       # (all or for each image)",
@@ -109,8 +107,7 @@ char *default_prefs[] =
 " ",
 "#------------------------------ Check Image ----------------------------------",
 " ",
-"CHECKIMAGE_TYPE        NONE            # may be one of NONE, FILTERED, RESIDUALS",
-"                                       # or HISTOGRAM",
+"CHECKIMAGE_TYPE        NONE            # may be one of NONE, or HISTOGRAM",
 "CHECKIMAGE_NAME        check.fits      # Filename for the check-image",
 " ",
 "#------------------------------ Miscellaneous ---------------------------------",
@@ -118,10 +115,8 @@ char *default_prefs[] =
 "FRAME_LIMITS           -1              # xmin, ymin, xmax, ymax of rectangular",
 "                                       # area to use (-1 is the whole frame)",
 "VERBOSE_TYPE           NORMAL          # \"QUIET\",\"NORMAL\" or \"FULL\"",
-"*NNODES                 1               # Number of nodes (for clusters)",
-"*NODE_INDEX             0               # Node index (for clusters)",
 #ifdef USE_THREADS
-"NTHREADS               2               # Number of simultaneous threads for",
+"NTHREADS               0               # Number of simultaneous threads for",
 "                                       # the SMP version of EyE",
 #else
 "NTHREADS               1               # 1 single thread",

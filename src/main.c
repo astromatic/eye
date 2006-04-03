@@ -5,11 +5,11 @@
 *
 *	Part of:	EyE
 *
-*	Author:		E.BERTIN, (IAP)
+*	Author:		E.BERTIN (IAP)
 *
 *	Contents:	parsing of the command line.
 *
-*	Last modify:	20/12/2005
+*	Last modify:	03/04/2006
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -22,9 +22,6 @@
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<string.h>
-#ifdef HAVE_MPI
-#include        <mpi.h>
-#endif
 
 #include	"define.h"
 #include	"globals.h"
@@ -43,10 +40,6 @@ int	main(int argc, char *argv[])
   {
    char		**argkey, **argval;
    int		a,abi,aei,nai, abo,aeo,nao, narg, opt, opt2;
-
-#ifdef HAVE_MPI
-  MPI_Init (&argc,&argv);
-#endif
 
   if (argc<2)
     {
@@ -125,20 +118,10 @@ int	main(int argc, char *argv[])
   free(argkey);
   free(argval);
 
-
-#ifdef HAVE_MPI
-  MPI_Comm_size(MPI_COMM_WORLD,&prefs.nnodes);
-  MPI_Comm_rank(MPI_COMM_WORLD,&prefs.node_index);
-#endif
-
   makeit(argv+abi, argv+abo, nai);
 
   NFPRINTF(OUTPUT, "");
   NPRINTF(OUTPUT, "> All done (in %d s)\n", prefs.time_diff);
-
-#ifdef HAVE_MPI
-  MPI_Finalize();
-#endif
 
   exit(EXIT_SUCCESS);
   return 0;

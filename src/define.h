@@ -9,7 +9,7 @@
 *
 *	Contents:	global definitions.
 *
-*	Last modify:	20/12/2005
+*	Last modify:	03/04/2006
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -30,7 +30,8 @@
 #else
 #define		MYVERSION	VERSION
 #endif
-#define         COPYRIGHT       "Emmanuel BERTIN <bertin@iap.fr>"
+#define         COPYRIGHT       "Emmanuel BERTIN <bertin@iap.fr>" \
+				" and Chiara MARMO <marmo@iap.fr>"
 #define		WEBSITE		"http://terapix.iap.fr/soft/eye/"
 #define         INSTITUTE       "TERAPIX team at IAP  http://terapix.iap.fr"
 

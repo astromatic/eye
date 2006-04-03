@@ -5,7 +5,7 @@
 *
 *	Part of:	EyE
 *
-*	Author:		E.BERTIN (IAP)
+*	Author:		E.BERTIN (IAP), C.MARMO (IAP)
 *
 *	Contents:	Handling of retinae.
 *

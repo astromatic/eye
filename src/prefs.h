@@ -9,7 +9,7 @@
 *
 *	Contents:	Include for prefs.c
 *
-*	Last modify:	20/12/2005
+*	Last modify:	03/04/2006
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -58,9 +58,7 @@ typedef struct
   char		check_name[MAXCHAR];			/* check-image name */
 /* Multithreading */
   int		nthreads;		/* Number of active threads */
-  int		nnodes;			/* Number of nodes (for clusters) */  
 /*----- miscellaneous */
-  int		node_index;		/* Node index (for multiprocessing) */ 
   enum	{QUIET, NORM, FULL}		verbose_type;	/* display type */
   char		sdate_start[12];		/* EyE start date */
   char		stime_start[12];		/* EyE start time */
