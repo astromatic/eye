@@ -5,7 +5,7 @@ SUBDIRS			= man src
 EXTRA_DIST		= AUTHORS BUGS ChangeLog HISTORY INSTALL README \
 			  THANKS acx_pthread.m4 acx_prog_cc_optim.m4
 			  $(PACKAGE).spec.in man/$(PACKAGE).1.in
-RPM_ROOTDIR		= /usr/src/RPM
+RPM_ROOTDIR		= `rpmbuild --nobuild -E %_topdir`
 RPM_SRCDIR		= $(RPM_ROOTDIR)/SOURCES
 rpm:	dist
 	cp -f $(PACKAGE)-$(VERSION).tar.gz $(RPM_SRCDIR)
