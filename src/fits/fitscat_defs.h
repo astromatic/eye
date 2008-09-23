@@ -9,7 +9,7 @@
 *
 *	Contents:	Simplified version of the LDACTools: internal defs
 *
-*	Last modify:	22/05/2003
+*	Last modify:	26/09/2006
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -34,7 +34,7 @@ extern int	bswapflag;		/* != 0 if bytes are swapped/IEEE */
 
 /*----------------------------- Internal constants --------------------------*/
 
-#define	OUTPUT		stderr		/* where all msgs are sent */
+#define	OUTPUT		stdout		/* where all msgs are sent */
 #define	KBYTE		1024		/* 1 kbyte! */
 #define	MBYTE		(1024*KBYTE)	/* 1 Mbyte! */
 #define	GBYTE		(1024*MBYTE)	/* 1 Gbyte! */
@@ -43,6 +43,8 @@ extern int	bswapflag;		/* != 0 if bytes are swapped/IEEE */
 #define	BODY_DEFVRAM	(1.9*GBYTE)	/* a fair number by 1999 standards */
 #define	BODY_DEFSWAPDIR	"/tmp"		/* OK at least for Unix systems */
 
+#define	BIG		1e+30		/* a huge number */
+#define	TINY		(1.0/BIG)	/* a tiny number */
 #ifndef PI
 #define	PI		3.14159265359	/* never met before? */
 #endif

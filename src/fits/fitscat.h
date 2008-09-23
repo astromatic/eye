@@ -9,7 +9,7 @@
 *
 *	Contents:	Simplified versin of the LDACTools: main include file
 *
-*	Last modify:	16/08/2003
+*	Last modify:	10/10/2007
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -22,6 +22,7 @@
 #endif
 
 #define	MAXCHARS	256	/* max. number of characters */
+#define WARNING_NMAX	1000	/* max. number of recorded warnings */
 
 /*---------------------------- return messages ------------------------------*/
 
@@ -74,6 +75,7 @@ typedef enum		{SHOW_ASCII, SHOW_SKYCAT}
 				output_type;    /* Type of output */
 
 typedef	float		PIXTYPE;		/* Pixel type */
+typedef	unsigned int	FLAGTYPE;		/* Flag type */
 
 #ifdef	HAVE_UNSIGNED_LONG_LONG
 typedef	unsigned long long	KINGSIZE_T;	/* for large sizes */
@@ -107,6 +109,8 @@ typedef struct structkey
   t_type	ttype;			/* standard ``t_type'' (storage) */
   char		printf[80];		/* printing format (C Convention) */
   char		unit[80];		/* physical unit */
+  char		voucd[80];		/* VO ucd */
+  char		vounit[80];		/* VO unit */
   int		naxis;			/* number of dimensions */
   int		*naxisn;		/* pointer to an array of dim. */
   int		nobj;			/* number of objects */
@@ -138,6 +142,8 @@ typedef struct structtab
   int		bitsgn;			/* = 0 if unsigned data */
   double	bscale;			/* data scale factor */
   double	bzero;			/* data offset parameter */
+  int		blank;			/* integer code for undefined values */
+  int		blankflag;		/* set if a blank keyword was found */
   enum {COMPRESS_NONE, COMPRESS_BASEBYTE, COMPRESS_PREVPIX}
 		compress_type;		/* image compression type */
   char		*compress_buf;		/* de-compression buffer */
@@ -177,12 +183,10 @@ extern catstruct	*new_cat(int ncat),
 
 extern tabstruct	*asc2bin_tab(catstruct *catin, char *tabinname, 
 				catstruct *catout, char *taboutname),
-			*init_readobj(tabstruct *tab),
+			*init_readobj(tabstruct *tab, char **pbuf),
 			*name_to_tab(catstruct *cat, char *tabname, int seg),
 			*new_tab(char *tabname),
-			*pos_to_tab(catstruct *cat, int pos, int seg),
-			*asc2bin_tab(catstruct *catin, char *tabinname,
-				catstruct *catout, char *taboutname);
+			*pos_to_tab(catstruct *cat, int pos, int seg);
 
 extern keystruct	*name_to_key(tabstruct *tab, char *keyname),
 			*new_key(char *keyname),
@@ -193,21 +197,23 @@ extern void	add_cleanupfilename(char *filename),
 		cleanup_files(void),
 		copy_tab_fromptr(tabstruct *tabin, catstruct *catout, int pos),
 		encode_checksum(unsigned int sum, char *str),
-		end_readobj(tabstruct *keytab, tabstruct *tab),
-		end_writeobj(catstruct *cat, tabstruct *tab),
+		end_readobj(tabstruct *keytab, tabstruct *tab, char *buf),
+		end_writeobj(catstruct *cat, tabstruct *tab, char *buf),
 		error(int, char *, char *),
+		error_installfunc(void (*func)(char *msg1, char *msg2)),
 		fixexponent(char *s),
 		free_body(tabstruct *tab),
 		free_cat(catstruct **cat, int ncat),
 		free_key(keystruct *key),
 		free_tab(tabstruct *tab),
-		init_writeobj(catstruct *cat, tabstruct *tab),
+		init_writeobj(catstruct *cat, tabstruct *tab, char **pbuf),
 		install_cleanup(void (*func)(void)),
 		print_obj(FILE *stream, tabstruct *tab),
 		read_keys(tabstruct *tab, char **keynames, keystruct **keys,
 			int nkeys, unsigned char *mask),
 		read_basic(tabstruct *tab),
 		read_body(tabstruct *tab, PIXTYPE *ptr, size_t size),
+		read_ibody(tabstruct *tab, FLAGTYPE *ptr, size_t size),
 		readbasic_head(tabstruct *tab),
 		remove_cleanupfilename(char *filename),
 		save_cat(catstruct *cat, char *filename),
@@ -217,16 +223,19 @@ extern void	add_cleanupfilename(char *filename),
 			int strflag,int banflag, int leadflag,
                         output_type o_type),
 		swapbytes(void *, int, int),
-		*ttypeconv(void *ptr, t_type ttypein, t_type ttypeout),
+		ttypeconv(void *ptrin, void *ptrout,
+			t_type ttypein, t_type ttypeout),
+		voprint_obj(FILE *stream, tabstruct *tab),
 		warning(char *, char *),
 		write_body(tabstruct *tab, PIXTYPE *ptr, size_t size),
 		write_checksum(tabstruct *tab);
 
-extern char	*tdisptoprintf(char *tdisp),
-		*printftotdisp(char *cprintf),
+extern char	*tdisptoprintf(char *tdisp, char *str),
+		*printftotdisp(char *cprintf, char *str),
 		*fitsnfind(char *fitsbuf, char *str, int nblock),
 		**tabs_list(catstruct *cat, int *n),
-		**keys_list(tabstruct *tab, int *n);
+		**keys_list(tabstruct *tab, int *n),
+		*warning_history(void);
 
 extern unsigned int
 		compute_blocksum(char *buf, unsigned int sum),
@@ -265,16 +274,20 @@ extern int	about_cat(catstruct *cat, FILE *stream),
 		init_cat(catstruct *cat),
 		map_cat(catstruct *cat),
 		open_cat(catstruct *cat, access_type at),
+		pad_tab(catstruct *cat, KINGSIZE_T size),
 		prim_head(tabstruct *tab),
 		readbintabparam_head(tabstruct *tab),
 		read_field(tabstruct *tab, char **keynames, keystruct **keys,
 			int nkeys, int field, tabstruct *ftab),
-		read_obj(tabstruct *keytab, tabstruct *tab),
-		read_obj_at(tabstruct *keytab, tabstruct *tab, long pos),
+		read_obj(tabstruct *keytab, tabstruct *tab, char *buf),
+		read_obj_at(tabstruct *keytab, tabstruct *tab, char *buf,
+				long pos),
 		remove_key(tabstruct *tab, char *keyname),
 		remove_keys(tabstruct *tab),
+                removekeywordfrom_head(tabstruct *tab, char *keyword),
 		remove_tab(catstruct *cat, char *tabname, int seg),
 		remove_tabs(catstruct *cat),
+		save_head(catstruct *cat, tabstruct *tab),
 		set_maxram(size_t maxram),
 		set_maxvram(size_t maxvram),
 		set_swapdir(char *dirname),
@@ -284,7 +297,7 @@ extern int	about_cat(catstruct *cat, FILE *stream),
 		update_head(tabstruct *tab),
 		update_tab(tabstruct *tab),
 		verify_checksum(tabstruct *tab),
-		write_obj(tabstruct *tab),
+		write_obj(tabstruct *tab, char *buf),
 		wstrncmp(char *, char *, int);
 
 extern PIXTYPE	*alloc_body(tabstruct *tab,

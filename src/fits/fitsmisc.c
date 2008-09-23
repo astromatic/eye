@@ -9,7 +9,7 @@
 *
 *	Contents:	miscellaneous functions.
 *
-*	Last modify:	14/05/2003
+*	Last modify:	18/07/2008
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -22,13 +22,14 @@
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<string.h>
-
-#ifdef HAVE_MPI
-#include	<mpi.h>
-#endif
+#include	<time.h>
 
 #include	"fitscat_defs.h"
 #include	"fitscat.h"
+
+static void	(*errorfunc)(char *msg1, char *msg2) = NULL;
+static char	warning_historystr[WARNING_NMAX][192]={""};
+static int	nwarning = 0, nwarning_history = 0, nerror = 0;
 
 /********************************* error ************************************/
 /*
@@ -36,12 +37,26 @@ I hope it will never be used!
 */
 void	error(int num, char *msg1, char *msg2)
   {
-#ifdef HAVE_MPI
-  MPI_Finalize();
-#endif
-
   fprintf(stderr, "\n> %s%s\n\n",msg1,msg2);
+  if (num && errorfunc && !nerror)
+    {
+    nerror = 1;
+    errorfunc(msg1, msg2);
+    }
   exit(num);
+  }
+
+
+/**************************** error_installfunc *****************************/
+/*
+I hope it will never be used!
+*/
+void	error_installfunc(void (*func)(char *msg1, char *msg2))
+  {
+  if (func)
+    errorfunc = func;
+
+  return;
   }
 
 
@@ -51,8 +66,44 @@ Print a warning message on screen.
 */
 void    warning(char *msg1, char *msg2)
   {
-  fprintf(OUTPUT, "\n> WARNING: %s%s\n\n",msg1,msg2);
+   time_t	warntime;
+   struct tm	*tm;
+
+  warntime = time(NULL);
+  tm = localtime(&warntime);
+ 
+  fprintf(stderr, "\n> WARNING: %s%s\n\n",msg1,msg2);
+  sprintf(warning_historystr[(nwarning++)%WARNING_NMAX],
+	"%04d-%02d-%02d %02d:%02d:%02d : %.80s%.80s",
+	tm->tm_year+1900, tm->tm_mon+1, tm->tm_mday,
+	tm->tm_hour, tm->tm_min, tm->tm_sec,
+	msg1, msg2);
+
+
   return;
+  }
+
+
+/****************************** warning_history ******************************/
+/*
+Return warning.
+*/
+char    *warning_history(void)
+  {
+   char		*str;
+
+  if (nwarning_history >= WARNING_NMAX)
+    {
+    nwarning_history = 0;	/* So it can be accessed later on */
+    return "";
+    }
+
+  str = warning_historystr[((nwarning>WARNING_NMAX? (nwarning%WARNING_NMAX):0)
+	+ nwarning_history++)%WARNING_NMAX];
+  if (!*str)
+    nwarning_history = 0;	/* So it can be accessed later on */
+
+  return str;
   }
 
 
@@ -62,8 +113,9 @@ Swap bytes for doubles, longs and shorts (for DEC machines or PC for inst.).
 */
 void    swapbytes(void *ptr, int nb, int n)
   {
-   char *cp;
-   int  j;
+   char	*cp,
+	c;
+   int	j;
 
   cp = (char *)ptr;
 
@@ -71,8 +123,12 @@ void    swapbytes(void *ptr, int nb, int n)
     {
     for (j=n; j--; cp+=4)
       {
-      cp[0] ^= (cp[3]^=(cp[0]^=cp[3]));
-      cp[1] ^= (cp[2]^=(cp[1]^=cp[2]));
+      c = cp[3];
+      cp[3] = cp[0];
+      cp[0] = c;
+      c = cp[2];
+      cp[2] = cp[1];
+      cp[1] = c;
       }
     return;
     }
@@ -80,7 +136,11 @@ void    swapbytes(void *ptr, int nb, int n)
   if (nb&2)
     {
     for (j=n; j--; cp+=2)
-      cp[0] ^= (cp[1]^=(cp[0]^=cp[1]));
+      {
+      c = cp[1];
+      cp[1] = cp[0];
+      cp[0] = c;
+      }
     return;
     }
 
@@ -91,10 +151,18 @@ void    swapbytes(void *ptr, int nb, int n)
     {
     for (j=n; j--; cp+=8)
       {
-      cp[0] ^= (cp[7]^=(cp[0]^=cp[7]));
-      cp[1] ^= (cp[6]^=(cp[1]^=cp[6]));
-      cp[2] ^= (cp[5]^=(cp[2]^=cp[5]));
-      cp[3] ^= (cp[4]^=(cp[3]^=cp[4]));
+      c = cp[7];
+      cp[7] = cp[0];
+      cp[0] = c;
+      c = cp[6];
+      cp[6] = cp[1];
+      cp[1] = c;
+      c = cp[5];
+      cp[5] = cp[2];
+      cp[2] = c;
+      c = cp[4];
+      cp[4] = cp[3];
+      cp[3] = c;
       }
     return;
     }

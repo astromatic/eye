@@ -9,3 +9,4 @@ eye_SOURCES		= back.c bpann.c field.c main.c makeit.c \
 			  types.h
 eye_LDADD		= $(top_builddir)/src/fits/libfits.a
 DATE=`date +"%Y-%m-%d"`
+

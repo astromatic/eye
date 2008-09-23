@@ -1,12 +1,12 @@
 # configure.ac for EyE
-# (C) E.Bertin 2003-2006
+# (C) E.Bertin 2003-2008
 # Process this file with autoconf to produce a configure script.
 # First, disable the annoying config.cache
 define([AC_CACHE_LOAD],)
 define([AC_CACHE_SAVE],)
 
 # This is your standard Bertin source code...
-AC_INIT(eye, 1.3.0, [bertin@iap.fr])
+AC_INIT(eye, 1.4.0, [bertin@iap.fr])
 AC_CONFIG_SRCDIR(src/makeit.c)
 AC_CONFIG_AUX_DIR(autoconf)
 AM_CONFIG_HEADER([config.h])
@@ -47,43 +47,19 @@ AC_ARG_ENABLE(icc,
         use_icc="no"
 	AC_MSG_RESULT([no]))
 
-# Provide special option for gprof profiling
-AC_MSG_CHECKING([for gprof profiler mode])
-AC_ARG_ENABLE(gprof,
-	[AC_HELP_STRING([--enable-gprof],
-	[Enable special mode for compilation with the gprof profiler \
-(off by default)])],
-        use_gprof="yes"
-	AC_MSG_RESULT([yes]),
-        use_gprof="no"
-	AC_MSG_RESULT([no]))
-
-# Provide a special option for static linking
-AC_MSG_CHECKING([for static linking])
-AC_ARG_ENABLE(static,
-        [AC_HELP_STRING([--enable-static],
-        [Choose linking with static libraries (off by default)])],
-        use_static=$enableval
-        AC_MSG_RESULT([yes]),
-        use_static="no"
-        AC_MSG_RESULT([no]))
 
 # Checks for programs.
 # GCC is chosen last because it is likely to yield less optimized code
+AC_LANG(C)
 AC_PROG_CC([$cclist])
-
-# C Compiler: Check that it is ANSI C
+# C Compiler: Check that it is ANSI C and POSIX-compliant
 AM_PROG_CC_STDC
-# C Compiler: Check that it is POSIX-compliant
 AC_ISC_POSIX
-
-# Special optimization options for the INTEL C compiler
-if test $use_icc = "yes" -a $CC = "icc"; then
-  CFLAGS="$CFLAGS -O3 -axW -ip"
-else
-  ACX_PROG_CC_OPTIM
+ACX_PROG_CC_OPTIM
+AC_DISABLE_STATIC
+#AC_DISABLE_SHARED
+AC_PROG_INSTALL
 AC_PROG_RANLIB
-fi
 
 # Checks for libraries.
 AC_CHECK_LIB(m, sin)
@@ -110,68 +86,98 @@ AC_FUNC_MMAP
 AC_FUNC_STRFTIME
 AC_CHECK_FUNCS([atexit getenv gethostname memcpy memmove memset mmap time])
 
+# Check support for large files
+AC_SYS_LARGEFILE
+AC_FUNC_FSEEKO
+
+
 # Set flags for multithreading
+n_pthreads=16
 AC_ARG_ENABLE(threads,
 	[AC_HELP_STRING([--enable-threads@<:@=<max_number_of_threads>@:>@],
-		[Enable multhreading (off by default)])],
-    if test "$enableval" = "yes"; then
-      n_pthreads=16
+	[Enable multhreading (on with up to $n_pthreads threads by default)])],
+    if test "$enableval" = "no"; then
+      use_pthreads="no"
     else
-      n_pthreads=$enableval
-    fi
-    use_pthreads=yes,
-    n_pthreads=1
-    use_pthreads=no
+      use_pthreads="yes"
+      if test "$enableval" != "yes"; then
+        n_pthreads=$enableval
+      fi
+    fi,
+    use_pthreads=yes
     )
-AC_DEFINE_UNQUOTED(THREADS_NMAX, $n_pthreads,[Maximum number of POSIX threads])
 
-if test "$use_pthreads" == "yes"; then
-# Actions to complete in case of multhreading
+# Provide special option for gprof profiling
+AC_MSG_CHECKING([for gprof profiler mode])
+AC_ARG_ENABLE(gprof,
+	[AC_HELP_STRING([--enable-gprof],
+	[Enable special mode for compilation with the gprof profiler \
+(off by default)])],
+        use_gprof="yes"
+	AC_MSG_RESULT([yes]),
+        use_gprof="no"
+	AC_MSG_RESULT([no]))
+
+# Provide a special option for static linking
+AC_MSG_CHECKING([for static linking])
+AC_ARG_ENABLE(static,
+        [AC_HELP_STRING([--enable-static],
+        [Choose linking with static libraries (off by default)])],
+        use_static=$enableval
+        AC_MSG_RESULT([yes]),
+        use_static="no"
+        AC_MSG_RESULT([no]))
+
+################# Actions to complete in case of multhreading ################
+AC_DEFINE_UNQUOTED(THREADS_NMAX, $n_pthreads,[Maximum number of POSIX threads])
+if test "$use_pthreads" = "yes"; then
   AC_MSG_CHECKING([for multithreading])
   AC_MSG_RESULT([maximum of $n_pthreads thread(s)])
   AC_DEFINE(USE_THREADS, 1, [Triggers multhreading])
 # CC, CFLAGS and LIBS are system and compiler-dependent
   ACX_PTHREAD
   CC="$PTHREAD_CC"
-  CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+  [CFLAGS="$CFLAGS $PTHREAD_CFLAGS -D_REENTRANT"]
   LIBS="$PTHREAD_LIBS $LIBS"
 fi
-
-# Check support for large files
-AC_SYS_LARGEFILE
-AC_FUNC_FSEEKO
-
-# Special optimization options for the INTEL C compiler
-if test $use_icc = "yes" -a $CC = "icc"; then
-  CFLAGS="$CFLAGS -O3 -axiMKW -ipo -ipo_obj -unroll"
-  LIBS="-limf $LIBS"
-fi
+AM_CONDITIONAL(USE_THREADS, test $use_pthreads = "yes")
 
 # Link with gprof option
 if test "$use_gprof" = "yes"; then
   if test "$use_icc" = "yes"; then
     CFLAGS="$CFLAGS -pq"
   else
-    CFLAGS="$CFLAGS -pg"
+    CFLAGS="-O3 -pg"
   fi
   use_static="no"
 fi
 
+# Static linking option
 if test "$use_static" = "yes"; then
-  LDFLAGS="$LDFLAGS -static"
+  LDFLAGS="-static -shared-libgcc $LDFLAGS"
 fi
 
 # Override automatic CFLAGS and LDFLAGS with those of user
-if test -n "$mycflags"; then
-CFLAGS="$mycflags"
-fi
-if test -n "$myldflags"; then
-LDFLAGS="$myldflags"
-fi
+#if test -n "$mycflags"; then
+#CFLAGS="$mycflags"
+#fi
+#if test -n "$myldflags"; then
+#LDFLAGS="$myldflags"
+#fi
 
 # Display compiler and linker flags
-AC_MSG_RESULT([I will compile using:  $CC $CFLAGS])
-AC_MSG_RESULT([I will link using:     $CC $LDFLAGS $LIBS])
+AC_MSG_RESULT([***************************************************************])
+AC_MSG_RESULT([Compile cmdline:  $CC $CFLAGS])
+AC_MSG_RESULT([Link    cmdline:  $CC $LDFLAGS $LIBS])
+AC_MSG_RESULT([***************************************************************])
 
-AC_CONFIG_FILES([Makefile man/Makefile src/Makefile src/fits/Makefile] eye.spec  man/eye.1)
+
+AC_CONFIG_FILES([
+Makefile
+src/Makefile
+src/fits/Makefile
+man/Makefile
+eye.spec
+man/eye.1])
 AC_OUTPUT
+

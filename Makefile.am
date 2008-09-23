@@ -1,15 +1,21 @@
 # Main Makefile for EyE
-# Copyright (C) 2003-2006 Emmanuel Bertin.
+# Copyright (C) 2003-2008 Emmanuel Bertin.
 AUTOMAKE_OPTIONS	= foreign no-dependencies
 SUBDIRS			= man src
-EXTRA_DIST		= AUTHORS BUGS ChangeLog HISTORY INSTALL README \
-			  THANKS acx_pthread.m4 acx_prog_cc_optim.m4
-			  $(PACKAGE).spec.in man/$(PACKAGE).1.in
+EXTRA_DIST		= AUTHORS BUGS ChangeLog HISTORY INSTALL README THANKS \
+			  doc/eye.pdf \
+			  acx_pthread.m4 acx_prog_cc_optim.m4
 RPM_ROOTDIR		= `rpmbuild --nobuild -E %_topdir`
 RPM_SRCDIR		= $(RPM_ROOTDIR)/SOURCES
+dist-hook:
+	rm -rf `find $(distdir) -name .svn`
 rpm:	dist
-	cp -f $(PACKAGE)-$(VERSION).tar.gz $(RPM_SRCDIR)
-	rpmbuild -ba --clean $(PACKAGE).spec
+	cp -f $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(RPM_SRCDIR)
+	rpmbuild -ba --clean --nodeps $(PACKAGE_NAME).spec
+
+rpm-icc:	dist
+	cp -f $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(RPM_SRCDIR)
+	USE_ICC="1" rpmbuild -ba --clean --nodeps $(PACKAGE_NAME).spec
 
 rpm-opteron:	dist
 	cp -f $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(RPM_SRCDIR)
@@ -18,3 +24,4 @@ rpm-opteron:	dist
 rpm-athlon:	dist
 	cp -f $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(RPM_SRCDIR)
 	GCCFLAGS="-O3 -g -funroll-loops -fomit-frame-pointer -Wall -m32 -march=i686 -msse -mfpmath=sse -mtune=athlon" rpmbuild -ba --target=i686 --clean $(PACKAGE_NAME).spec
+

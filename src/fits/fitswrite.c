@@ -9,7 +9,7 @@
 *
 *	Contents:	low-level functions for writing LDAC FITS catalogs.
 *
-*	Last modify:	15/08/2003
+*	Last modify:	17/07/2006
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -26,18 +26,16 @@
 #include	"fitscat_defs.h"
 #include	"fitscat.h"
 
-char	*lineout_buf, padbuf[FBSIZE];
-int	lineout_size, nlineout;
 
-/****** save_cat ***************************************************************
+/****** save_cat **************************************************************
 PROTO	void save_cat(catstruct *cat, char *filename)
 PURPOSE	Save a FITS catalog with name filename.
 INPUT	catalog structure,
 	filename.
 OUTPUT	-.
 NOTES	Any preexisting file with name filename is overwritten.
-AUTHOR	E. Bertin (IAP & Leiden observatory)
-VERSION	08/05/2002
+AUTHOR	E. Bertin (IAP)
+VERSION	09/09/2003
  ***/
 void	save_cat(catstruct *cat, char *filename)
 
@@ -71,13 +69,13 @@ void	save_cat(catstruct *cat, char *filename)
 
 /****** save_tab **************************************************************
 PROTO	void save_tab(catstruct *cat, tabstruct *tab)
-PURPOSE	Save a FITS catalog with name filename.
-INPUT	catalog structure,
-	filename.
+PURPOSE	Save a FITS table.
+INPUT	pointer to the catalog structure,
+	pointer to the table structure.
 OUTPUT	-.
 NOTES	-.
 AUTHOR	E. Bertin (IAP & Leiden observatory)
-VERSION	15/08/2003
+VERSION	09/09/2003
  ***/
 void	save_tab(catstruct *cat, tabstruct *tab)
 
@@ -95,9 +93,7 @@ void	save_tab(catstruct *cat, tabstruct *tab)
 /*  Make the table parameters reflect its content*/
   update_tab(tab);
 /*  The header itself*/
-  tabflag = update_head(tab)==RETURN_OK?1:0;
-  QFTELL(cat->file, tab->headpos, cat->filename);
-  QFWRITE(tab->headbuf, tab->headnblock*FBSIZE, cat->file, cat->filename);
+  tabflag = save_head(cat, tab)==RETURN_OK?1:0;
 /*  Allocate memory for the output buffer */
   tabsize = 0;
   tabcat = NULL;	/* to satisfy gcc -Wall */
@@ -202,25 +198,76 @@ void	save_tab(catstruct *cat, tabstruct *tab)
     }
 
 /* FITS padding*/
-  size = PADEXTRA(tabsize);
-  if (size)
-    QFWRITE(padbuf, (size_t)size, cat->file, cat->filename);
+  pad_tab(cat, tabsize);
 
   return;
   }
 
 
-/****** init_writeobj *********************************************************
-PROTO	void init_writeobj(catstruct *cat, tabstruct *tab)
-PURPOSE	Prepare the writing of individual sources in a FITS table
+/****** save_head *************************************************************
+PROTO	int save_head(catstruct *cat, tabstruct *tab)
+PURPOSE	Save a FITS table header.
 INPUT	catalog structure,
 	table structure.
+OUTPUT	RETURN_OK if tab is a binary table, or RETURN_ERROR otherwise.
+NOTES	-.
+AUTHOR	E. Bertin (IAP)
+VERSION	16/12/2004
+ ***/
+int	save_head(catstruct *cat, tabstruct *tab)
+
+  {
+   int		tabflag;
+
+/*  Make the table parameters reflect its content*/
+  update_tab(tab);
+/*  The header itself*/
+  tabflag = update_head(tab);
+  QFTELL(cat->file, tab->headpos, cat->filename);
+  QFWRITE(tab->headbuf, tab->headnblock*FBSIZE, cat->file, cat->filename);
+
+  return tabflag;
+  }
+
+
+/******* pad_tab *************************************************************
+PROTO	int pad_tab(catstruct *cat, KINGSIZE_T size)
+PURPOSE	Pad the FITS body of a tab with 0's to FBSIZE.
+INPUT	A pointer to the cat structure,
+	the number of elements that have been written.
+OUTPUT	RETURN_OK if padding necessary, RETURN_ERROR otherwise.
+NOTES	.
+AUTHOR	E. Bertin (IAP)
+VERSION	23/01/2003
+ ***/
+int pad_tab(catstruct *cat, KINGSIZE_T size)
+  {
+   static char  padbuf[FBSIZE];
+   int		padsize;
+
+  padsize = PADEXTRA(size);
+  if (padsize)
+    {
+    QFWRITE(padbuf, padsize, cat->file, cat->filename);
+    return RETURN_OK;
+    }
+  else
+    return RETURN_ERROR;
+  }
+
+
+/****** init_writeobj *********************************************************
+PROTO	void init_writeobj(catstruct *cat, tabstruct *tab, char **pbuf)
+PURPOSE	Prepare the writing of individual sources in a FITS table
+INPUT	catalog structure,
+	table structure,
+	pointer to an array pointer to be used as a temporary buffer.
 OUTPUT	-.
 NOTES	-.
 AUTHOR	E. Bertin (IAP & Leiden observatory)
-VERSION	13/12/2002
+VERSION	26/09/2004
  ***/
-void	init_writeobj(catstruct *cat, tabstruct *tab)
+void	init_writeobj(catstruct *cat, tabstruct *tab, char **pbuf)
 
   {
    keystruct	*key;
@@ -229,30 +276,14 @@ void	init_writeobj(catstruct *cat, tabstruct *tab)
 /* Make the table parameters reflect its content*/
   update_tab(tab);
 /* The header itself */
-  if (update_head(tab) != RETURN_OK)
+  if (save_head(cat, tab) != RETURN_OK)
     error(EXIT_FAILURE, "*Error*: Not a binary table: ", tab->extname);
 
-  QFTELL(cat->file, tab->headpos, cat->filename);
-  QFWRITE(tab->headbuf, tab->headnblock*FBSIZE, cat->file, cat->filename);
 /* Store the current position */
   QFTELL(cat->file, tab->bodypos, cat->filename);
 
-/* Allocate memory for the output buffer  (or increase it if done already) */
-  if (lineout_buf)
-    {
-    if (lineout_size < tab->naxisn[0])
-      {
-      QREALLOC(lineout_buf, char, tab->naxisn[0]);
-      lineout_size = tab->naxisn[0];
-      }
-    }
-  else
-    {
-    QMALLOC(lineout_buf, char, tab->naxisn[0]);
-    lineout_size = tab->naxisn[0];
-    }
-
-  nlineout++;
+/* Allocate memory for the output buffer */
+  QMALLOC(*pbuf, char, tab->naxisn[0]);
 
 /* Scan keys to check that memory has been allocated */
   key = tab->key;
@@ -268,59 +299,61 @@ void	init_writeobj(catstruct *cat, tabstruct *tab)
 
 
 /****** write_obj *************************************************************
-PROTO	int write_obj(tabstruct *tab)
+PROTO	int write_obj(tabstruct *tab, char *buf)
 PURPOSE	Write one individual source in a FITS table
-INPUT	Destination catalog
-	Table structure.
+INPUT	Table structure,
+	pointer to the temporary buffer.
 OUTPUT	-.
 NOTES	-.
 AUTHOR	E. Bertin (IAP & Leiden observatory)
-VERSION	18/02/2000
+VERSION	28/12/2004
  ***/
-int	write_obj(tabstruct *tab)
+int	write_obj(tabstruct *tab, char *buf)
 
   {
-   keystruct	*key;
-   char		*pin, *pout;
-   int		b,k;
-   int		esize;
+   keystruct    *key;
+   char         *pin, *pout, *pout2;
+   int          b,k;
+   int          esize;
 
   key = tab->key;
-  pout = lineout_buf;
+  pout = buf;
   for (k=tab->nkey; k--; key = key->nextkey)
     {
     pin = key->ptr;
+    pout2 = pout;
+    for (b=key->nbytes; b--;)
+      *(pout++) = *(pin++);
     if (bswapflag)
       {
       esize = t_size[key->ttype];
-      swapbytes(pin, esize, key->nbytes/esize);
+      swapbytes(pout2, esize, key->nbytes/esize);
       }
-    for (b=key->nbytes; b--;)
-      *(pout++) = *(pin++);
     }
 
-  QFWRITE(lineout_buf, *tab->naxisn, tab->cat->file, tab->cat->filename);
+  QFWRITE(buf, *tab->naxisn, tab->cat->file, tab->cat->filename);
 
   return ++tab->naxisn[1];
   }
 
 
 /****** end_writeobj **********************************************************
-PROTO	void end_writeobj(catstruct *cat, tabstruct *tab)
+PROTO	void end_writeobj(catstruct *cat, tabstruct *tab, char *buf)
 PURPOSE	End the writing of individual sources in a FITS table
 INPUT	catalog structure,
-	table structure.
+	table structure,
+	pointer to the temporary buffer.
 OUTPUT	-.
 NOTES	-.
 AUTHOR	E. Bertin (IAP & Leiden observatory)
-VERSION	13/12/2002
+VERSION	26/09/2004
  ***/
-void	end_writeobj(catstruct *cat, tabstruct *tab)
+void	end_writeobj(catstruct *cat, tabstruct *tab, char *buf)
 
   {
    keystruct	*key;
    OFF_T	pos;
-   int		k, size;
+   int		k;
 
 /* Make the table parameters reflect its content*/
   key = tab->key;
@@ -332,20 +365,14 @@ void	end_writeobj(catstruct *cat, tabstruct *tab)
     error(EXIT_FAILURE, "*Error*: Not a binary table: ", tab->extname);
 
 /*--FITS padding*/
-  size = PADEXTRA(tab->tabsize);
-  if (size)
-    QFWRITE(padbuf, size, cat->file, cat->filename);
+  pad_tab(cat, tab->tabsize);
+  pos = ftell(cat->file);
   QFTELL(cat->file, pos, cat->filename);
   QFSEEK(cat->file, tab->headpos, SEEK_SET, cat->filename);
   QFWRITE(tab->headbuf, FBSIZE*tab->headnblock, cat->file, cat->filename);
   QFSEEK(cat->file, pos, SEEK_SET, cat->filename);
 
-  if (!(--nlineout))
-    {
-    free(lineout_buf);
-    lineout_buf = NULL;
-    lineout_size = 0;
-    }
+  free(buf);
 
   return;
   }
@@ -359,7 +386,7 @@ INPUT	Output stream
 OUTPUT	-.
 NOTES	-.
 AUTHOR	E. Bertin (IAP & Leiden observatory)
-VERSION	13/06/97
+VERSION	12/07/2006
  ***/
 void	print_obj(FILE *stream, tabstruct *tab)
 
@@ -378,16 +405,6 @@ void	print_obj(FILE *stream, tabstruct *tab)
     for (i = key->nbytes/esize; i--; ptr += esize)
       switch(key->ttype)
         {
-        case T_SHORT:
-          fprintf(stream, *key->printf?key->printf:"%d", *(short *)ptr);
-          if (i)
-            putc(' ', stream);
-          break;
-        case T_LONG:
-          fprintf(stream, *key->printf?key->printf:"%d", *(int *)ptr);
-          if (i)
-            putc(' ', stream);
-          break;
         case T_FLOAT:
           fprintf(stream, *key->printf?key->printf:"%g", *(float *)ptr);
           if (i)
@@ -395,6 +412,16 @@ void	print_obj(FILE *stream, tabstruct *tab)
           break;
         case T_DOUBLE:
           fprintf(stream, *key->printf?key->printf:"%f", *(double *)ptr);
+          if (i)
+            putc(' ', stream);
+          break;
+        case T_SHORT:
+          fprintf(stream, *key->printf?key->printf:"%d", *(short *)ptr);
+          if (i)
+            putc(' ', stream);
+          break;
+        case T_LONG:
+          fprintf(stream, *key->printf?key->printf:"%d", *(int *)ptr);
           if (i)
             putc(' ', stream);
           break;
@@ -416,7 +443,7 @@ void	print_obj(FILE *stream, tabstruct *tab)
           break;
         default:
           error(EXIT_FAILURE, "*FATAL ERROR*: Unknown FITS type in ",
-		"show_keys()");
+		"print_obj()");
         }
     if (k)
       putc(' ', stream);
@@ -427,3 +454,83 @@ void	print_obj(FILE *stream, tabstruct *tab)
   return;
   }
 
+
+/****** voprint_obj ***********************************************************
+PROTO	void voprint_obj(FILE *stream, tabstruct *tab)
+PURPOSE	Print one individual source to the output stream in VOTable format
+INPUT	Output stream
+	Table structure.
+OUTPUT	-.
+NOTES	-.
+AUTHOR	G. Tissier & E.Bertin (IAP)
+VERSION	12/07/2006
+ ***/
+void	voprint_obj(FILE *stream, tabstruct *tab)
+
+  {
+   keystruct	*key;
+   char		*ptr;
+   int		i,k, esize;
+
+  if (!(key = tab->key))
+    error(EXIT_FAILURE, "*Error*: no key to print in table ", tab->extname);
+
+  fprintf(stream, "    <TR>");
+
+  for (k=tab->nkey; k--; key = key->nextkey)
+    {
+    fprintf(stream, "<TD>");
+
+    esize = t_size[key->ttype];
+    ptr = key->ptr;
+    for (i = key->nbytes/esize; i--; ptr += esize)
+      switch(key->ttype)
+        {
+        case T_FLOAT:
+          fprintf(stream, *key->printf?key->printf:"%g", *(float *)ptr);
+          if (i)
+            putc(' ', stream);
+          break;
+        case T_DOUBLE:
+          fprintf(stream, *key->printf?key->printf:"%f", *(double *)ptr);
+          if (i)
+            putc(' ', stream);
+          break;
+        case T_SHORT:
+          fprintf(stream, *key->printf?key->printf:"%d", *(short *)ptr);
+          if (i)
+            putc(' ', stream);
+          break;
+        case T_LONG:
+          fprintf(stream, *key->printf?key->printf:"%d", *(int *)ptr);
+          if (i)
+            putc(' ', stream);
+          break;
+        case T_BYTE:
+          if (key->htype==H_BOOL)
+            {
+            if (*ptr)
+              fprintf(stream, "T");
+            else
+              fprintf(stream, "F");
+            }
+          else
+            fprintf(stream, key->printf?key->printf:"%d", (int)*ptr);
+          if (i)
+            putc(' ', stream);
+          break;
+        case T_STRING:
+          fprintf(stream, "%c", (int)*ptr);
+          break;
+        default:
+          error(EXIT_FAILURE, "*FATAL ERROR*: Unknown FITS type in ",
+		"voprint_obj()");
+        }
+
+    fprintf(stream, "</TD>");
+    }
+
+  fprintf(stream, "</TR>\n");
+
+  return;
+  }
