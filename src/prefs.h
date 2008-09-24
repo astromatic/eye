@@ -9,7 +9,7 @@
 *
 *	Contents:	Include for prefs.c
 *
-*	Last modify:	03/04/2006
+*	Last modify:	23/09/2008
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -73,9 +73,12 @@ prefstruct	prefs;
 
 /*----------------------------- Internal constants --------------------------*/
 
+#define		MAXCHARL	16384	/* max. nb of chars in a string list */
 #define		MAXLIST		32	/* max. nb of list members */
+#define		MAXLISTSIZE	2000000	/* max size of list */
 
 /*-------------------------------- protos -----------------------------------*/
+extern char	*list_to_str(char *listname);
 extern int	cistrcmp(char *cs, char *ct, int mode);
 
 extern void	dumpprefs(int state),

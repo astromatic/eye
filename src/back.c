@@ -9,7 +9,7 @@
 *
 *	Contents:	functions dealing with background computation.
 *
-*	Last modify:	22/08/2003
+*	Last modify:	24/09/2008
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -46,9 +46,9 @@ void	make_back(fieldstruct *field)
    backstruct	*backmesh,*bm;
    tabstruct	*tab;
    PIXTYPE	*buf,*buft;
+   OFF_T	fcurpos,fcurpos2, bufshift, jumpsize;
    size_t	bufsize, bufsize2,
-		bufshift, size,meshsize,jumpsize;
-   off_t	fcurpos,fcurpos2;
+		size,meshsize;
    int		i,j,k,m,n, step, nlines,
 		w,bw, bh, nx,ny,nb,
 		lflag;
@@ -83,8 +83,8 @@ void	make_back(fieldstruct *field)
     nlines = BACK_BUFSIZE/w;
     step = (field->backh-1)/nlines+1;
     bufsize = (size_t)(nlines = field->backh/step)*w;
-    bufshift = (step/2)*(size_t)w;
-    jumpsize = (step-1)*(size_t)w;
+    bufshift = (step/2)*(OFF_T)w;
+    jumpsize = (step-1)*(OFF_T)w;
     }
   else
     bufshift = jumpsize = 0;	/* to avoid gcc -Wall warnings */
@@ -132,8 +132,8 @@ void	make_back(fieldstruct *field)
         nlines = BACK_BUFSIZE/w;
         step = (n-1)/nlines+1;
         bufsize = (nlines = n/step)*(size_t)w;
-        bufshift = (step/2)*(size_t)w;
-        jumpsize = (step-1)*(size_t)w;
+        bufshift = (step/2)*(OFF_T)w;
+        jumpsize = (step-1)*(OFF_T)w;
         free(buf);
         QMALLOC(buf, PIXTYPE, bufsize);		/* pixel buffer */
         }

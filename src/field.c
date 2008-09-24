@@ -9,7 +9,7 @@
 *
 *	Contents:	Handling of field structures.
 *
-*	Last modify:	20/12/2005
+*	Last modify:	24/09/2008
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -91,6 +91,7 @@ fieldstruct	*load_field(char *filename, int frameno, int fieldno)
   field->height = 1;
   for (i=1; i<tab->naxis; i++)
     field->height *= tab->naxisn[i];
+  field->npix = field->width*field->height;
 
 /*-- Background */
   field->backw = prefs.back_size[0]<field->width ?

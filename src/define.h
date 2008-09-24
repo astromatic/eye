@@ -9,7 +9,7 @@
 *
 *	Contents:	global definitions.
 *
-*	Last modify:	03/04/2006
+*	Last modify:	23/09/2008
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -25,11 +25,7 @@
 /*------------------------ what, who, when and where ------------------------*/
 
 #define         BANNER          "EyE"
-#ifdef USE_THREADS
-#define		MYVERSION	VERSION "-MP"
-#else
 #define		MYVERSION	VERSION
-#endif
 #define         COPYRIGHT       "Emmanuel BERTIN <bertin@iap.fr>" \
 				" and Chiara MARMO <marmo@iap.fr>"
 #define		WEBSITE		"http://terapix.iap.fr/soft/eye/"
@@ -45,7 +41,7 @@
 
 #define		BIG		1e+30		/* a huge number */
 #define		OUTPUT		stdout		/* where all msgs are sent */
-#define		MAXCHAR		4096		/* max. number of characters */
+#define		MAXCHAR		512		/* max. number of characters */
 
 /*--------------------- in case of missing constants ------------------------*/
 

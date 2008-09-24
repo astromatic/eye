@@ -9,7 +9,7 @@
 *
 *	Contents:	Keywords for the configuration file.
 *
-*	Last modify:	03/04/2006
+*	Last modify:	24/09/2008
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -57,7 +57,7 @@ pkeystruct key[] =
   {"NN_SIZE", P_INTLIST, &prefs.nn_size[1], 1, 1024, 0.0,0.0, {""},
      1,3, &prefs.nnn_size},
   {"NPASSES", P_INT, &prefs.niter, 1,2000000000},
-  {"NTHREADS", P_INT, &prefs.nthreads, 1, THREADS_PREFMAX},
+  {"NTHREADS", P_INT, &prefs.nthreads, 0, THREADS_PREFMAX},
   {"RETINA_NAME", P_STRING, prefs.retina_name},
   {"RETINA_SIZE", P_INTLIST, prefs.retina_size, 1, 1024, 0.0,0.0, {""},
      1,2, &prefs.nretina_size},
@@ -68,7 +68,7 @@ pkeystruct key[] =
   {""}
  };
 
-char			keylist[sizeof(key)/sizeof(pkeystruct)][16];
+char			keylist[sizeof(key)/sizeof(pkeystruct)][32];
 const char		notokstr[] = {" \t=,;\n\r\""};
 
 char *default_prefs[] =
