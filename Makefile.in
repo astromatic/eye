@@ -34,7 +34,7 @@ host_triplet = @host@
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(srcdir)/eye.spec.in $(top_srcdir)/configure AUTHORS COPYING \
+	$(srcdir)/eye.spec.in $(top_srcdir)/configure AUTHORS \
 	ChangeLog INSTALL THANKS autoconf/config.guess \
 	autoconf/config.sub autoconf/depcomp autoconf/install-sh \
 	autoconf/missing autoconf/mkinstalldirs
@@ -176,7 +176,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
 # Main Makefile for EyE
-# Copyright (C) 2003-2008 Emmanuel Bertin.
+# Copyright (C) 2003-2009 Emmanuel Bertin (IAP/CNRS/UPMC)
 AUTOMAKE_OPTIONS = foreign no-dependencies
 SUBDIRS = man src
 EXTRA_DIST = AUTHORS BUGS ChangeLog HISTORY INSTALL README THANKS \
@@ -636,14 +636,6 @@ rpm:	dist
 rpm-icc:	dist
 	cp -f $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(RPM_SRCDIR)
 	USE_ICC="1" rpmbuild -ba --clean --nodeps $(PACKAGE_NAME).spec
-
-rpm-opteron:	dist
-	cp -f $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(RPM_SRCDIR)
-	GCCFLAGS="-O3 -g -funroll-loops -fomit-frame-pointer -Wall -march=opteron" rpmbuild -ba --target=x86_64 --clean $(PACKAGE_NAME).spec                                                            
-
-rpm-athlon:	dist
-	cp -f $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(RPM_SRCDIR)
-	GCCFLAGS="-O3 -g -funroll-loops -fomit-frame-pointer -Wall -m32 -march=i686 -msse -mfpmath=sse -mtune=athlon" rpmbuild -ba --target=i686 --clean $(PACKAGE_NAME).spec
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

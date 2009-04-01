@@ -9,7 +9,7 @@
 *
 *	Contents:	global definitions.
 *
-*	Last modify:	23/09/2008
+*	Last modify:	01/04/2009
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -28,8 +28,8 @@
 #define		MYVERSION	VERSION
 #define         COPYRIGHT       "Emmanuel BERTIN <bertin@iap.fr>" \
 				" and Chiara MARMO <marmo@iap.fr>"
-#define		WEBSITE		"http://terapix.iap.fr/soft/eye/"
-#define         INSTITUTE       "TERAPIX team at IAP  http://terapix.iap.fr"
+#define		WEBSITE		"http://astromatic.iap.fr/software/eye/"
+#define         INSTITUTE       "IAP http://www.iap.fr"
 
 /*----------------------------- Physical constants --------------------------*/
 
