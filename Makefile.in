@@ -179,7 +179,8 @@ top_srcdir = @top_srcdir@
 # Copyright (C) 2003-2009 Emmanuel Bertin (IAP/CNRS/UPMC)
 AUTOMAKE_OPTIONS = foreign no-dependencies
 SUBDIRS = man src
-EXTRA_DIST = AUTHORS BUGS ChangeLog HISTORY INSTALL README THANKS \
+EXTRA_DIST = AUTHORS BUGS ChangeLog COPYRIGHT HISTORY INSTALL \
+			  README THANKS \
 			  doc/eye.pdf \
 			  acx_pthread.m4 acx_prog_cc_optim.m4
 
