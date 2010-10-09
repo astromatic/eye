@@ -1,12 +1,39 @@
-# configure.ac for EyE
-# (C) E.Bertin (IAP/CNRS/UPMC) 2003-2009
-# Process this file with autoconf to produce a configure script.
+#
+#				configure.ac
+#
+# Process this file with autoconf to generate a configure script.
+#
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#
+#	This file part of:	EyE
+#
+#	Copyright:		(C) 2002-2010 IAP/CNRS/UPMC
+#
+#	Author:			Emmanuel Bertin (IAP)
+#
+#	License:		GNU General Public License
+#
+#	EyE is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 3 of the License, or
+# 	(at your option) any later version.
+#	EyE is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#	You should have received a copy of the GNU General Public License
+#	along with EyE.  If not, see <http://www.gnu.org/licenses/>.
+#
+#	Last modified:		09/10/2010
+#
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 # First, disable the annoying config.cache
 define([AC_CACHE_LOAD],)
 define([AC_CACHE_SAVE],)
 
 # This is your standard Bertin source code...
-AC_INIT(eye, 1.5.0, [bertin@iap.fr])
+AC_INIT(eye, 1.6.0, [bertin@iap.fr])
 AC_CONFIG_SRCDIR(src/makeit.c)
 AC_CONFIG_AUX_DIR(autoconf)
 AM_CONFIG_HEADER([config.h])

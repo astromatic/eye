@@ -1,21 +1,134 @@
-/*
-                                Changelog
-
-*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-*
-*       Part of:        EyE
-*
-*       Author:         E. BERTIN (IAP)
-*
-*       Contents:       log of changes made to the EyE source
-*
-*       Last modify:    03/04/2006
-*
-*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-*/
+#
+#				Changelog
+#
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#
+#	This file part of:	EyE
+#
+#	Copyright:		(C) 2002-2010 IAP/CNRS/UPMC
+#
+#	Author:			Emmanuel Bertin (IAP)
+#
+#	Last modified:		09/10/2010
+#
+#	License:		GNU General Public License
+#
+#	EyE is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 3 of the License, or
+# 	(at your option) any later version.
+#	EyE is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#	You should have received a copy of the GNU General Public License
+#	along with EyE.  If not, see <http://www.gnu.org/licenses/>.
+#
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ------------------------------------------------------------------------
-r92 | marmo | 2005-12-22 14:11:50 +0100 (Thu, 22 Dec 2005) | 5 lines
+r40 | bertin | 2010-07-20 13:18:55 +0200 (Tue, 20 Jul 2010) | 2 lines
+
+Fixed TFORM error message in fitshead.c (thanks to S.Guieu).
+
+------------------------------------------------------------------------
+r39 | bertin | 2010-07-02 13:38:08 +0200 (Fri, 02 Jul 2010) | 2 lines
+
+Removed redundant update_tab() calls.
+
+------------------------------------------------------------------------
+r38 | bertin | 2010-07-02 13:25:25 +0200 (Fri, 02 Jul 2010) | 3 lines
+
+Updated FITS library to the latest version.
+Fixed fistpick() issue with slashes within strings (thanks to F.Schuller).
+
+------------------------------------------------------------------------
+r37 | bertin | 2009-09-10 19:24:46 +0200 (Thu, 10 Sep 2009) | 6 lines
+
+Added --enable-auto-flags.
+Added --enable-best-link configure option.
+Added rpm-best option in Makefile.am.
+Cleaned up configure file.
+Pushed version number to 1.5.0.
+
+------------------------------------------------------------------------
+r36 | bertin | 2009-05-22 14:28:10 +0200 (Fri, 22 May 2009) | 3 lines
+
+Added filtering of non-numerical characters for floating-point FITS keywords (th
+anks to D.G. Bonfield for the suggestion).
+Included Chiara's MissFITS fix in fitspick().
+
+------------------------------------------------------------------------
+r34 | bertin | 2009-04-09 15:11:07 +0200 (Thu, 09 Apr 2009) | 3 lines
+
+Fixed reference to COPYRIGHT file.
+Pushed version number to 1.4.1.
+
+------------------------------------------------------------------------
+r33 | bertin | 2009-04-01 17:50:29 +0200 (Wed, 01 Apr 2009) | 7 lines
+
+Cleaned up Makefile.am RPM options.
+Cleaned up junk in FITS library directory.
+Fixed rpm build issue on Fedora Core 10.
+Fixed display of max thread number in configure help.
+Added CeCILL COPYRIGHT file.
+Set the license string to CeCILL in the .spec file.
+
+------------------------------------------------------------------------
+r32 | bertin | 2009-03-12 14:09:40 +0100 (Thu, 12 Mar 2009) | 1 line
+
+Set mime-type property of EyE doc to application/pdf
+------------------------------------------------------------------------
+r30 | root | 2009-01-09 17:16:08 +0100 (Fri, 09 Jan 2009) | 1 line
+
+Changed trunk directory name
+------------------------------------------------------------------------
+r29 | bertin | 2008-10-01 18:44:43 +0200 (Wed, 01 Oct 2008) | 4 lines
+
+Updated autotools scripts (thanks to Greg Daues for pointing this out).
+Updated compiler autoconfiguration script.
+Removed libfits library.
+
+------------------------------------------------------------------------
+r28 | bertin | 2008-09-24 16:02:32 +0200 (Wed, 24 Sep 2008) | 3 lines
+
+Fixed bug in reading image during background map construction.
+Fixed issue with NTHREADS (but no parallelization yet!).
+
+------------------------------------------------------------------------
+r27 | bertin | 2008-09-23 12:15:10 +0200 (Tue, 23 Sep 2008) | 4 lines
+
+Updated autoconf scripts (RPM binaries are now dynamically linked by default)..
+Updated FITS library to the latest version.
+Pushed version number to 1.4.0
+
+------------------------------------------------------------------------
+r26 | marmo | 2007-06-19 20:58:00 +0200 (Tue, 19 Jun 2007) | 1 line
+
+rpm building generalised.
+------------------------------------------------------------------------
+r25 | baillard | 2006-07-18 13:52:57 +0200 (Tue, 18 Jul 2006) | 2 lines
+
+Move eye to public repository
+
+------------------------------------------------------------------------
+r24 | bertin | 2006-04-04 18:35:23 +0200 (Tue, 04 Apr 2006) | 2 lines
+
+Doc: updated front-page
+
+------------------------------------------------------------------------
+r23 | bertin | 2006-04-03 23:04:53 +0200 (Mon, 03 Apr 2006) | 3 lines
+
+Cleaned up the code and autoconf files.
+Doc: added the full .tex and ps components
+
+------------------------------------------------------------------------
+r22 | bertin | 2005-12-22 14:47:55 +0100 (Thu, 22 Dec 2005) | 2 lines
+
+Fixed one last time the PIX_TO_RETINA(pix) (last commit for today I promess!).
+
+------------------------------------------------------------------------
+r21 | marmo | 2005-12-22 14:11:50 +0100 (Thu, 22 Dec 2005) | 5 lines
 
 
 retina.c: In function `feed_retina':
@@ -23,93 +136,95 @@ retina.c:276: error: syntax error before ')' token
 fixed
 
 ------------------------------------------------------------------------
-r91 | bertin | 2005-12-22 13:55:17 +0100 (Thu, 22 Dec 2005) | 3 lines
+r20 | bertin | 2005-12-22 13:55:17 +0100 (Thu, 22 Dec 2005) | 3 lines
 
 Reintroduced forgotten PIX_TO_RETINA(). :-(
 One extra commit to bother Laurent.
 
 ------------------------------------------------------------------------
-r90 | bertin | 2005-12-21 20:18:11 +0100 (Wed, 21 Dec 2005) | 3 lines
+r19 | bertin | 2005-12-21 20:18:11 +0100 (Wed, 21 Dec 2005) | 3 lines
 
 Improved general presentation.
-NPASSES is now the number of passes through the whole training set (100 is now the default).
+NPASSES is now the number of passes through the whole training set (100 is now t
+he default).
 
 ------------------------------------------------------------------------
-r89 | bertin | 2005-12-21 18:30:46 +0100 (Wed, 21 Dec 2005) | 2 lines
+r18 | bertin | 2005-12-21 18:30:46 +0100 (Wed, 21 Dec 2005) | 2 lines
 
 Recovered the missing half of the pattern stack.
 
 ------------------------------------------------------------------------
-r88 | bertin | 2005-12-21 18:16:40 +0100 (Wed, 21 Dec 2005) | 3 lines
+r17 | bertin | 2005-12-21 18:16:40 +0100 (Wed, 21 Dec 2005) | 3 lines
 
 New balancing scheme for training samples.
 Minor Aesthetical improvements.
 
 ------------------------------------------------------------------------
-r87 | bertin | 2005-12-21 17:41:07 +0100 (Wed, 21 Dec 2005) | 3 lines
+r16 | bertin | 2005-12-21 17:41:07 +0100 (Wed, 21 Dec 2005) | 3 lines
 
 Fixed bug in Bayesian histogram on 64bit systems.
 Fixed compiler-dependent bug in retina feeding routine.
 
 ------------------------------------------------------------------------
-r86 | bertin | 2005-12-20 20:26:25 +0100 (Tue, 20 Dec 2005) | 3 lines
+r15 | bertin | 2005-12-20 20:26:25 +0100 (Tue, 20 Dec 2005) | 3 lines
 
 Further aesthetical improvements.
 Changed version number to 1.2.
 
 ------------------------------------------------------------------------
-r85 | bertin | 2005-12-20 20:21:29 +0100 (Tue, 20 Dec 2005) | 3 lines
+r14 | bertin | 2005-12-20 20:21:29 +0100 (Tue, 20 Dec 2005) | 3 lines
 
 Improved Aesthetics of display and config.file.
 Changed PASSES keyword to NPASSES keyword
 
 ------------------------------------------------------------------------
-r84 | bertin | 2005-12-20 19:09:57 +0100 (Tue, 20 Dec 2005) | 3 lines
+r13 | bertin | 2005-12-20 19:09:57 +0100 (Tue, 20 Dec 2005) | 3 lines
 
 Removed more junk.
 Fixed huge bug in handling of background mesh-sizes.
 
 ------------------------------------------------------------------------
-r83 | bertin | 2005-12-20 18:59:56 +0100 (Tue, 20 Dec 2005) | 2 lines
+r12 | bertin | 2005-12-20 18:59:56 +0100 (Tue, 20 Dec 2005) | 2 lines
 
 removed even more junk.
 
 ------------------------------------------------------------------------
-r82 | bertin | 2005-12-20 18:56:09 +0100 (Tue, 20 Dec 2005) | 2 lines
+r11 | bertin | 2005-12-20 18:56:09 +0100 (Tue, 20 Dec 2005) | 2 lines
 
 removed more junk.
 
 ------------------------------------------------------------------------
-r81 | bertin | 2005-12-20 18:53:07 +0100 (Tue, 20 Dec 2005) | 2 lines
+r10 | bertin | 2005-12-20 18:53:07 +0100 (Tue, 20 Dec 2005) | 2 lines
 
 removed junk.
 
 ------------------------------------------------------------------------
-r80 | bertin | 2005-12-20 18:51:09 +0100 (Tue, 20 Dec 2005) | 2 lines
+r9 | bertin | 2005-12-20 18:51:09 +0100 (Tue, 20 Dec 2005) | 2 lines
 
 removed junk.
 
 ------------------------------------------------------------------------
-r79 | bertin | 2005-12-20 18:44:57 +0100 (Tue, 20 Dec 2005) | 2 lines
+r8 | bertin | 2005-12-20 18:44:57 +0100 (Tue, 20 Dec 2005) | 2 lines
 
 removed junk.
 
 ------------------------------------------------------------------------
-r78 | marmo | 2005-12-20 14:37:26 +0100 (Tue, 20 Dec 2005) | 1 line
+r7 | marmo | 2005-12-20 14:37:26 +0100 (Tue, 20 Dec 2005) | 1 line
 
 displayed informations updated
 ------------------------------------------------------------------------
-r77 | marmo | 2005-12-19 12:07:20 +0100 (Mon, 19 Dec 2005) | 1 line
+r6 | marmo | 2005-12-19 12:07:20 +0100 (Mon, 19 Dec 2005) | 1 line
 
 default value -1 in FRAME_LIMITS parameter activated
 ------------------------------------------------------------------------
-r76 | marmo | 2005-12-19 11:37:36 +0100 (Mon, 19 Dec 2005) | 1 line
+r5 | marmo | 2005-12-19 11:37:36 +0100 (Mon, 19 Dec 2005) | 1 line
 
 FRAME_LIMITS parameter and -dd option added
 ------------------------------------------------------------------------
-r75 | marmo | 2005-12-18 19:40:11 +0100 (Sun, 18 Dec 2005) | 2 lines
+r4 | marmo | 2005-12-18 19:40:11 +0100 (Sun, 18 Dec 2005) | 2 lines
 
 reference version for eye
+------------------------------------------------------------------------
 
 EB      21/08/2003      -               Completely new distribution. Some
                                         functions rewritten.
