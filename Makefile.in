@@ -64,7 +64,7 @@ host_triplet = @host@
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(srcdir)/eye.spec.in $(top_srcdir)/configure AUTHORS COPYING \
+	$(srcdir)/eye.spec.in $(top_srcdir)/configure AUTHORS \
 	ChangeLog INSTALL THANKS autoconf/config.guess \
 	autoconf/config.sub autoconf/depcomp autoconf/install-sh \
 	autoconf/missing autoconf/mkinstalldirs
@@ -207,8 +207,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign no-dependencies
 SUBDIRS = man src
-EXTRA_DIST = AUTHORS BUGS ChangeLog COPYING HISTORY INSTALL \
-			  README THANKS \
+EXTRA_DIST = AUTHORS BUGS ChangeLog COPYRIGHT HISTORY INSTALL \
+			  LICENSE README THANKS \
 			  doc/eye.pdf \
 			  acx_pthread.m4 acx_prog_cc_optim.m4
 

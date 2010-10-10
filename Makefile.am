@@ -30,8 +30,8 @@
 
 AUTOMAKE_OPTIONS	= foreign no-dependencies
 SUBDIRS			= man src
-EXTRA_DIST		= AUTHORS BUGS ChangeLog COPYING HISTORY INSTALL \
-			  README THANKS \
+EXTRA_DIST		= AUTHORS BUGS ChangeLog COPYRIGHT HISTORY INSTALL \
+			  LICENSE README THANKS \
 			  doc/eye.pdf \
 			  acx_pthread.m4 acx_prog_cc_optim.m4
 RPM_ROOTDIR		= `rpmbuild --nobuild -E %_topdir`
