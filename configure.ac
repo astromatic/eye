@@ -7,9 +7,8 @@
 #
 #	This file part of:	EyE
 #
-#	Copyright:		(C) 2002-2010 IAP/CNRS/UPMC
-#
-#	Author:			Emmanuel Bertin (IAP)
+#	Copyright:		(C) 2002-2010 Emmanuel Bertin -- IAP/CNRS/UPMC
+#				& Chiara Maramo -- IAP/CNRS
 #
 #	License:		GNU General Public License
 #

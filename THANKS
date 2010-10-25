@@ -1,4 +1,12 @@
-ESO
- Financial support
+Ville Laurikari <vl@iki.fi>
+        For his VL_PROG_CC_WARNINGS (modified to ACX_PROG_CC_OPTIM)
+Steven G. Johnson <stevenj@alum.mit.edu>
+        For his AC_PTHREAD (modified to ACX_PTHREAD)
 Thomas Erben <terben@astro.uni-bonn.de>
- Suggestions and extensive testing
+	Suggestions and extensive testing
+Shantanu Desai <shantanu@illinois.edu>
+	Testing
+TERAPIX project <http://terapix.iap.fr>
+ESO <http://www.eso.org>
+	Financial support
+

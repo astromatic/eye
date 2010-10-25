@@ -7,12 +7,8 @@
 *
 *	This file part of:	EyE
 *
-*	Copyright:		(C) 1998-2010 IAP/CNRS/UPMC
-*				(C) 1997 ESO
-*				(C) 1995,1996 Sterrewacht Leiden
-*
-*	Authors:		Emmanuel Bertin (IAP)
-*				Chiara Marmo (IAP)
+*	Copyright:		(C) 1995-2010 Emmanuel Bertin -- IAP/CNRS/UPMC
+*				& Chiara Marmo -- IAP/CNRS
 *
 *	License:		GNU General Public License
 *
@@ -61,9 +57,9 @@ int	main(int argc, char *argv[])
   if (argc<2)
     {
     fprintf(OUTPUT, "\n         %s  version %s (%s)\n", BANNER,MYVERSION,DATE);
-    fprintf(OUTPUT, "\nby %s\n", AUTHORS);
-    fprintf(OUTPUT, "Copyright %s\n", COPYRIGHT);
-    fprintf(OUTPUT, "\nvisit %s\n", WEBSITE);
+    fprintf(OUTPUT, "\nCopyright %s\n", COPYRIGHT);
+    fprintf(OUTPUT, "Written by %s\n", AUTHORS);
+    fprintf(OUTPUT, "\nVisit %s\n", WEBSITE);
     fprintf(OUTPUT, "\n%s\n", DISCLAIMER);
     error(EXIT_SUCCESS, "SYNTAX: ", SYNTAX);
     }

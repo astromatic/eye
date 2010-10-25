@@ -7,12 +7,8 @@
 *
 *	This file part of:	EyE
 *
-*	Copyright:		(C) 1998-2010 IAP/CNRS/UPMC
-*				(C) 1997 ESO
-*				(C) 1995,1996 Sterrewacht Leiden
-*
-*	Authors:		Emmanuel Bertin (IAP)
-*				Chiara Marmo (IAP)
+*	Copyright:		(C) 1995-2010 Emmanuel Bertin -- IAP/CNRS/UPMC
+*				& Chiara Marmo -- IAP/CNRS
 *
 *	License:		GNU General Public License
 *

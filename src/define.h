@@ -7,12 +7,8 @@
 *
 *	This file part of:	EyE
 *
-*	Copyright:		(C) 1998-2010 IAP/CNRS/UPMC
-*				(C) 1997 ESO
-*				(C) 1995,1996 Sterrewacht Leiden
-*
-*	Authors:		Emmanuel Bertin (IAP)
-*				Chiara Marmo (IAP)
+*	Copyright:		(C) 1995-2010 Emmanuel Bertin -- IAP/CNRS/UPMC
+*				& Chiara Marmo -- IAP/CNRS
 *
 *	License:		GNU General Public License
 *
@@ -43,13 +39,13 @@
 
 #define         BANNER          "EyE"
 #define		MYVERSION	VERSION
-#define         COPYRIGHT       "1998-2010 IAP/CNRS/UPMC"
+#define         COPYRIGHT       "2010 IAP/CNRS/UPMC"
 #define		DISCLAIMER	BANNER " comes with ABSOLUTELY NO WARRANTY\n" \
 		"You may redistribute copies of " BANNER "\n" \
 		"under the terms of the GNU General Public License."
 #define		AUTHORS		"Emmanuel BERTIN <bertin@iap.fr> and " \
 		"Chiara MARMO <chiara.marmo@u-psud.fr>"
-#define		WEBSITE		"http://astromatic.net/software/eye/"
+#define		WEBSITE		"http://astromatic.net/software/eye"
 #define         INSTITUTE       "IAP http://www.iap.fr"
 
 /*----------------------------- Physical constants --------------------------*/

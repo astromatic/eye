@@ -2,18 +2,14 @@
 *				bpann.c
 *
 * 9 routines for neural network management. Enhanced and optimized version of
-* the 1993 routines. This is the block-adaptive, conjugate-gradient version of
+* the1993 routines. This is the block-adaptive, conjugate-gradient version of
 * the original bp.c.
 *
 *%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 *
 *	This file part of:	EyE
 *
-*	Copyright:		(C) 1993,1998-2010 IAP/CNRS/UPMC
-*				(C) 1994,1997 ESO
-*				(C) 1995,1996 Sterrewacht Leiden
-*
-*	Author:			Emmanuel Bertin (IAP)
+*	Copyright:		(C) 1993-2010 Emmanuel Bertin -- IAP/CNRS/UPMC
 *
 *	License:		GNU General Public License
 *

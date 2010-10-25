@@ -20,11 +20,8 @@ wildly non-linear filters on astronomical images. Typical applications of EyE
 include adaptive filtering, feature detection and cosmetic corrections.
 .RE
 See http://astromatic.net/software/eye for more details.
-.SS
-Operation modes:
-.RE
-\ 
-.RS
+.SS Operation modes:
+.TP
 \fB\-h\fR, \fB\-\-help\fR
 print this help, then exit
 .TP
@@ -44,7 +41,9 @@ is maintained as a PDF manual available at
 .SH "REPORTING BUGS"
 Please report bugs to the EyE software forum at http://astromatic.net/forum.
 .SH "SEE ALSO"
-.BR sex (1).
+.BR
+missfits(1), psfex(1), scamp(1), sex(1), sky(1), stiff(1), stuff(1), swarp (1),
+ww(1)
 .SH AUTHORS
 Written by Emmanuel Bertin and Chiara Marmo (Institut d'Astrophysique de Paris)
 .PP

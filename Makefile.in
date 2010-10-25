@@ -17,17 +17,13 @@
 #
 #				Makefile.am
 #
-# Process this file with automake to generate a Makefile
+# Main Makefile. Process this file with automake to generate a Makefile
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 #	This file part of:	EyE
 #
-#	Copyright:		(C) 1998-2010 IAP/CNRS/UPMC
-#
-#	Author:			Emmanuel Bertin (IAP)
-#
-#	Last modified:		09/10/2010
+#	Copyright:		(C) 2002-2010 Emmanuel Bertin -- IAP/CNRS/UPMC
 #
 #	License:		GNU General Public License
 #
@@ -41,6 +37,8 @@
 #	GNU General Public License for more details.
 #	You should have received a copy of the GNU General Public License
 #	along with EyE.  If not, see <http://www.gnu.org/licenses/>.
+#
+#	Last modified:		11/10/2010
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 VPATH = @srcdir@
@@ -207,9 +205,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign no-dependencies
 SUBDIRS = man src
-EXTRA_DIST = AUTHORS BUGS ChangeLog COPYRIGHT HISTORY INSTALL \
+EXTRA_DIST = doc AUTHORS BUGS ChangeLog COPYRIGHT HISTORY INSTALL \
 			  LICENSE README THANKS \
-			  doc/eye.pdf \
 			  acx_pthread.m4 acx_prog_cc_optim.m4
 
 RPM_ROOTDIR = `rpmbuild --nobuild -E %_topdir`

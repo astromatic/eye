@@ -7,9 +7,7 @@
 #
 #	This file part of:	EyE
 #
-#	Copyright:		(C) 1998-2010 IAP/CNRS/UPMC
-#
-#	Author:			Emmanuel Bertin (IAP)
+#	Copyright:		2002-2010 Emmanuel Bertin -- IAP/CNRS/UPMC
 #
 #	License:		GNU General Public License
 #
@@ -39,7 +37,7 @@ Version: %{version}
 Release: %{release}
 Source0: ftp://ftp.iap.fr/pub/from_users/bertin/%{name}/%{name}-%{version}.tar.gz
 URL: http://astromatic.net/software/%{name}/
-License: GPL v3
+License: GPL v3+
 Group: Sciences/Astronomy
 BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildRequires: pkgconfig
