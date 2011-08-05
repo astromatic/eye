@@ -57,9 +57,9 @@ int	main(int argc, char *argv[])
   if (argc<2)
     {
     fprintf(OUTPUT, "\n         %s  version %s (%s)\n", BANNER,MYVERSION,DATE);
-    fprintf(OUTPUT, "\nCopyright %s\n", COPYRIGHT);
-    fprintf(OUTPUT, "Written by %s\n", AUTHORS);
-    fprintf(OUTPUT, "\nVisit %s\n", WEBSITE);
+    fprintf(OUTPUT, "\nWritten by %s\n", AUTHORS);
+    fprintf(OUTPUT, "Copyright %s\n", COPYRIGHT);
+    fprintf(OUTPUT, "\nvisit %s\n", WEBSITE);
     fprintf(OUTPUT, "\n%s\n", DISCLAIMER);
     error(EXIT_SUCCESS, "SYNTAX: ", SYNTAX);
     }
