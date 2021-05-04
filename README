@@ -13,7 +13,7 @@ cosmetic corrections.
 This file describes shortly the SYNTAX of EyE.
 See INSTALL for instructions about install.
 For more information, please refer to the documentation
-(see http://astromatic.iap.fr/software/eye/ )
+(see http://astromatic.net/software/eye/ )
 
 The general SYNTAX is the following:
 % eye -i Input_image1 [Input_image2 ...] -o Output_image1 [Output_image2 ...]
